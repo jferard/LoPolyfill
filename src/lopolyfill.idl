@@ -1,0 +1,112 @@
+#include <com/sun/star/uno/XInterface.idl>
+#include <com/sun/star/beans/XPropertySet.idl>
+
+module com { module github { module jferard { module lopolyfill {
+
+    // https://wiki.documentfoundation.org/ReleaseNotes/24.8#New_functions
+    // FILTER function was added. (Balázs Varga, allotropia) tdf#126573 OASIS OFFICE-4156
+    // LET function was added. (Balázs Varga, allotropia) tdf#137543
+    // RANDARRAY function was added. (Balázs Varga, allotropia) tdf#126573
+    // SEQUENCE function was added. (Balázs Varga, allotropia) tdf#126573
+    // SORT function was added. (Balázs Varga, allotropia) tdf#126573 OASIS OFFICE-4157
+    // SORTBY function was added. (Balázs Varga, allotropia) tdf#126573 OASIS OFFICE-4158
+    // UNIQUE function was added. (Balázs Varga, allotropia) tdf#126573
+    // XLOOKUP function was added. (Winfried Donkers) (Balázs Varga, allotropia) tdf#127293 OASIS OFFICE-4154
+    // XMATCH function was added. (Balázs Varga, allotropia) tdf#128425 OASIS OFFICE-4155
+    interface XLoPolyfill
+    {
+        // FILTER https://help.libreoffice.org/master/en-US/text/scalc/01/func_filter.html
+        sequence< sequence< any > > lopFilter(
+            [in] sequence< sequence< any > > inRange,
+            [in] sequence< sequence< any > > criteria,
+            [in] any defaultValue)
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // RANDARRAY https://help.libreoffice.org/master/en-US/text/scalc/01/func_randarray.html
+        sequence< sequence< any > > lopRandarray(
+            [in] any rows,
+            [in] any columns,
+            [in] any minValue,
+            [in] any maxValue,
+            [in] any integers)
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // SEQUENCE https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sequence.html
+        sequence< sequence< any > > lopSequence(
+            [in] long rows,
+            [in] long columns,
+            [in] any start,
+            [in] any step)
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // SORT https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sort.html
+        sequence< sequence< any > > lopSort(
+            [in] sequence< sequence< any > > inRange,
+            [in] any sortIndex,
+            [in] any sortOrder,
+            [in] any byCol)
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // SORTBY https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sortby.html
+        sequence< sequence< any > > lopSortBy(
+            [in] sequence< sequence< any > > inRange,
+            [in] sequence< sequence< any > > sortByRange1,
+            [in] long sortOrder1,
+            [in] any sortByRange2,
+            [in] any sortOrder2,
+            [in] any sortByRange3,
+            [in] any sortOrder3,
+            [in] any sortByRange4,
+            [in] any sortOrder4,
+            [in] any sortByRange5,
+            [in] any sortOrder5,
+            [in] any sortByRange6,
+            [in] any sortOrder6,
+            [in] any sortByRange7,
+            [in] any sortOrder7,
+            [in] any sortByRange8,
+            [in] any sortOrder8,
+            [in] any sortByRange9,
+            [in] any sortOrder9,
+            [in] any sortByRange10,
+            [in] any sortOrder10,
+            [in] any sortByRange11,
+            [in] any sortOrder11,
+            [in] any sortByRange12,
+            [in] any sortOrder12,
+            [in] any sortByRange13,
+            [in] any sortOrder13,
+            [in] any sortByRange14,
+            [in] any sortOrder14,
+            [in] any sortByRange15,
+            [in] any sortOrder15
+            )
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // UNIQUE https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_unique.html
+        sequence< sequence< any > > lopUnique(
+            [in] sequence< sequence< any > > inRange,
+            [in] any byCol,
+            [in] any uniqueness)
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // XLOOKUP https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_xlookup.html
+        sequence< sequence< any > > lopXLookup(
+            [in] any criterion,
+            [in] sequence< sequence< any > > searchRange,
+            [in] sequence< sequence< any > > resultRange,
+            [in] any defaultValue,
+            [in] any matchMode,
+            [in] any searchMode)
+            raises( com::sun::star::lang::IllegalArgumentException );
+
+        // XMATCH https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_xmatch.html
+        sequence< sequence< any > > lopXMatch(
+            [in] any criterion,
+            [in] sequence< sequence< any > > searchRange,
+            [in] any matchMode,
+            [in] any searchMode)
+            raises( com::sun::star::lang::IllegalArgumentException );
+    };
+
+}; }; }; };

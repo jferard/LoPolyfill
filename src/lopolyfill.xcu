@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    oor:name="CalcAddIns" oor:package="org.openoffice.Office">
+    <node oor:name="AddInInfo">
+        <node oor:name="com.github.jferard.lopolyfill.LoPolyfillImpl"
+              oor:op="replace">
+            <node oor:name="AddInFunctions">
+                <node oor:name="lopFilter" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.FILTER</value>
+                        <value xml:lang="fr">LOP.FILTRE</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for FILTER. Filters a data range or array based on specified conditions.</value>
+                        <value xml:lang="fr">Polyfill pour FILTRE. Filtre une plage de données ou une matrice en fonction de conditions spécifiées.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">FILTER</value>
+                        <value xml:lang="fr">FILTRE</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="inRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Range</value>
+                                <value xml:lang="fr">Plage</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The array or range to filter</value>
+                                <value xml:lang="fr">la matrice ou la plage à filtrer</value>
+                            </prop>
+                        </node>
+                        <node oor:name="criteria" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Criteria</value>
+                                <value xml:lang="fr">Critères</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A boolean array whose height (filtering by columns) or width (filtering by rows) is the same as the array, used to select data from the Range.</value>
+                                <value xml:lang="fr">Une matrice booléenne dont la hauteur (filtrage par colonnes) ou la largeur (filtrage par lignes) est la même que la matrice, utilisés pour sélectionner des données dans la Plage.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="defaultValue" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Result if empty</value>
+                                <value xml:lang="fr">Résultat si vide</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The value to return if all values in the Criteria array are empty (filter return nothing).</value>
+                                <value xml:lang="fr">La valeur à renvoyer si toutes les valeurs de la matrice Critères sont vides (le filtre ne renvoie rien).</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+
+                <node oor:name="lopRandarray" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.RANDARRAY</value>
+                        <value xml:lang="fr">LOP.TABLEAU.ALEA</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for RANDARRAY. Generates an array of random numbers between two limit values.</value>
+                        <value xml:lang="fr">Polyfill pour TABLEAU.ALEA. Génère un tableau de nombres aléatoires entre deux valeurs limites.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">RANDARRAY</value>
+                        <value xml:lang="fr">TABLEAU.ALEA</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="rows" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Rows</value>
+                                <value xml:lang="fr">Lignes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number of rows to return. If omitted, the value is 1.</value>
+                                <value xml:lang="fr">Le nombre de lignes à renvoyer. Si cette valeur est omise, la valeur est 1.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="columns" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Columns</value>
+                                <value xml:lang="fr">Colonnes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number of columns to return. If omitted, the value is 1.</value>
+                                <value xml:lang="fr">Le nombre de colonnes à renvoyer. Si cette valeur est omise, la valeur est 1.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="minValue" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Min</value>
+                                <value xml:lang="fr">Min</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The lower limit of the generated numbers. If omitted, the minimum value is 0.</value>
+                                <value xml:lang="fr">La limite inférieure des nombres générés. Si elle est omise, la valeur minimale est 0.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="maxValue" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Max</value>
+                                <value xml:lang="fr">Max</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The upper limit of the generated numbers. If omitted, the maximum value is 1.</value>
+                                <value xml:lang="fr">La limite supérieure des nombres générés. Si elle est omise, la valeur maximale est 1.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="integers" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Integers</value>
+                                <value xml:lang="fr">Entiers</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">Returns whole numbers (TRUE) or decimal numbers (FALSE). Default is FALSE.</value>
+                                <value xml:lang="fr">Renvoie des nombres entiers (VRAI) ou des nombres décimaux (FAUX). La valeur par défaut est FAUX.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+
+                <node oor:name="lopSequence" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.SEQUENCE</value>
+                        <value xml:lang="fr">LOP.SEQUENCE</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for SEQUENCE. Generate a list of sequential numbers in an array.</value>
+                        <value xml:lang="fr">Polyfill pour SEQUENCE. Générer une liste de nombres séquentiels dans une matrice.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">SEQUENCE</value>
+                        <value xml:lang="fr">SEQUENCE</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="rows" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Rows</value>
+                                <value xml:lang="fr">Lignes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A positive integer. The number of rows to return.</value>
+                                <value xml:lang="fr">Un entier positif. Le nombre de lignes à renvoyer.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="columns" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Columns</value>
+                                <value xml:lang="fr">Colonnes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A positive integer. The number of columns to return.</value>
+                                <value xml:lang="fr">Un entier positif. Le nombre de colonnes à renvoyer.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="start" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Start</value>
+                                <value xml:lang="fr">Début</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The initial value of the sequence. If omitted, default is 1.</value>
+                                <value xml:lang="fr">La valeur initiale de la séquence. Si elle est omise, la valeur par défaut est 1.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="step" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Step</value>
+                                <value xml:lang="fr">Étape</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The increment of each subsequent value in the array. If omitted, default is 1.</value>
+                                <value xml:lang="fr">L'incrément de chaque valeur suivante dans le tableau. Si omis, la valeur par défaut est 1.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+
+                <node oor:name="lopSort" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.SORT</value>
+                        <value xml:lang="fr">LOP.TRIER</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for SORT. Sorts the contents of a range or array.</value>
+                        <value xml:lang="fr">Polyfill pour TRIER. Trie le contenu d'une plage ou d'une matrice.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">SORT</value>
+                        <value xml:lang="fr">TRIER</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="inRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Range</value>
+                                <value xml:lang="fr">Plage</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The range or array to sort.</value>
+                                <value xml:lang="fr">La plage ou la matrice à trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortIndex" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortIndex</value>
+                                <value xml:lang="fr">IndexdeTri</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number indicating the row or column to sort by.</value>
+                                <value xml:lang="fr">Le numéro indiquant la ligne ou la colonne par laquelle effectuer le tri.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder</value>
+                                <value xml:lang="fr">OrdredeTri</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Un nombre indiquant l'ordre de tri souhaité ; 1 pour l'ordre croissant (par défaut), -1 pour l'ordre décroissant.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="byCol" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">ByCol</value>
+                                <value xml:lang="fr">ParCol</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A logical value indicating the desired sort direction; FALSE to sort by row (default), TRUE to sort by column.</value>
+                                <value xml:lang="fr">Une valeur logique indiquant le sens de tri souhaité ; FAUX pour trier par ligne (par défaut), VRAI pour trier par colonne.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopSortBy" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.SORTBY</value>
+                        <value xml:lang="fr">LOP.TRIERPAR</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for SORTBY. Sorts the contents of a range or array based on the values in a corresponding range or array.</value>
+                        <value xml:lang="fr">Polyfill pour TRIERPAR. Trie le contenu d'une plage ou d'une matrice en fonction des valeurs d'une plage ou d'une matrice correspondante.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">SORTBY</value>
+                        <value xml:lang="fr">TRIERPAR</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="inRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Range</value>
+                                <value xml:lang="fr">Plage</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The range or array to sort.</value>
+                                <value xml:lang="fr">La plage ou la matrice à trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange1" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange1</value>
+                                <value xml:lang="fr">TriparPlage1</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 1st range to sort on.</value>
+                                <value xml:lang="fr">La 1ère matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder1" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder1</value>
+                                <value xml:lang="fr">OrdredeTri1</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange2" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange2</value>
+                                <value xml:lang="fr">TriparPlage2</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 2nd range to sort on.</value>
+                                <value xml:lang="fr">La 2ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder2" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder2</value>
+                                <value xml:lang="fr">OrdredeTri2</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange3" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange3</value>
+                                <value xml:lang="fr">TriparPlage3</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 3rd range to sort on.</value>
+                                <value xml:lang="fr">La 3ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder3" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder3</value>
+                                <value xml:lang="fr">OrdredeTri3</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange4" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange4</value>
+                                <value xml:lang="fr">TriparPlage4</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 4th range to sort on.</value>
+                                <value xml:lang="fr">La 4ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder4" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder4</value>
+                                <value xml:lang="fr">OrdredeTri4</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                 <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange5" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange5</value>
+                                <value xml:lang="fr">TriparPlage5</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 5th range to sort on.</value>
+                                <value xml:lang="fr">La 5ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder5" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder5</value>
+                                <value xml:lang="fr">OrdredeTri5</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange6" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange6</value>
+                                <value xml:lang="fr">TriparPlage6</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 6th range to sort on.</value>
+                                <value xml:lang="fr">La 6ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder6" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder6</value>
+                                <value xml:lang="fr">OrdredeTri6</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange7" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange7</value>
+                                <value xml:lang="fr">TriparPlage7</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 7th range to sort on.</value>
+                                <value xml:lang="fr">La 7ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder7" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder7</value>
+                                <value xml:lang="fr">OrdredeTri7</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange8" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange8</value>
+                                <value xml:lang="fr">TriparPlage8</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 8th range to sort on.</value>
+                                <value xml:lang="fr">La 8ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder8" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder8</value>
+                                <value xml:lang="fr">OrdredeTri8</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange9" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange9</value>
+                                <value xml:lang="fr">TriparPlage9</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 9th range to sort on.</value>
+                                <value xml:lang="fr">La 9ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder9" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder9</value>
+                                <value xml:lang="fr">OrdredeTri9</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange10" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange10</value>
+                                <value xml:lang="fr">TriparPlage10</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 10th range to sort on.</value>
+                                <value xml:lang="fr">La 10ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder10" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder10</value>
+                                <value xml:lang="fr">OrdredeTri10</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange11" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange11</value>
+                                <value xml:lang="fr">TriparPlage11</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 11th range to sort on.</value>
+                                <value xml:lang="fr">La 11ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder11" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder11</value>
+                                <value xml:lang="fr">OrdredeTri11</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange12" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange12</value>
+                                <value xml:lang="fr">TriparPlage12</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 12th range to sort on.</value>
+                                <value xml:lang="fr">La 12ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder12" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder12</value>
+                                <value xml:lang="fr">OrdredeTri12</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange13" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange13</value>
+                                <value xml:lang="fr">TriparPlage13</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 13th range to sort on.</value>
+                                <value xml:lang="fr">La 13ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder13" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder13</value>
+                                <value xml:lang="fr">OrdredeTri13</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange14" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange14</value>
+                                <value xml:lang="fr">TriparPlage14</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 14th range to sort on.</value>
+                                <value xml:lang="fr">La 14ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder14" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder14</value>
+                                <value xml:lang="fr">OrdredeTri14</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortByRange15" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortRange15</value>
+                                <value xml:lang="fr">TriparPlage15</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 15th range to sort on.</value>
+                                <value xml:lang="fr">La 15ème matrice ou plage sur laquelle trier.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="sortOrder15" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">SortOrder15</value>
+                                <value xml:lang="fr">OrdredeTri15</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopUnique" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.UNIQUE</value>
+                        <value xml:lang="fr">LOP.UNIQUE</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for UNIQUE. Returns the array of unique values from a range or array of values.</value>
+                        <value xml:lang="fr">Polyfill pour UNIQUE. Renvoie la matrice de valeurs uniques à partir d'une plage ou d'une matrice de valeurs.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">UNIQUE</value>
+                        <value xml:lang="fr">UNIQUE</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="inRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                                <value xml:lang="fr">Matrice</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The range or array from which to return unique values.</value>
+                                <value xml:lang="fr">La plage ou la matrice à partir de laquelle renvoyer des valeurs uniques.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="byCol" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">By col</value>
+                                <value xml:lang="fr">Par col</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A logical value that indicates how to compare data: TRUE - compares data horizontally for a match of all cells in each column, across all columns. FALSE or omitted (default) - compares data vertically, for a match of all cells of each row, across all rows.</value>
+                                <value xml:lang="fr">Une valeur logique qui indique comment comparer les données : VRAI - compare les données horizontalement pour une correspondance de toutes les cellules de chaque colonne, sur toutes les colonnes. FAUX ou omis (par défaut) - compare les données verticalement, pour une correspondance de toutes les cellules de chaque ligne, sur toutes les lignes.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="uniqueness" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Uniqueness</value>
+                                <value xml:lang="fr">Unicité</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A logical value that defines which values are considered unique. TRUE returns values that occur only once. The default is FALSE or omitted, which returns all distinct values in the range or array.</value>
+                                <value xml:lang="fr">Une valeur logique qui définit les valeurs considérées comme uniques. VRAI renvoie les valeurs qui n'apparaissent qu'une seule fois. La valeur par défaut est FAUX ou omise, ce qui renvoie toutes les valeurs distinctes de la plage ou de la matrice.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopXLookup" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.XLOOKUP</value>
+                        <value xml:lang="fr">LOP.RECHERCHEX</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for XLOOKUP. Searches for a value in an array and returns a reference to a cell or range of cells.</value>
+                        <value xml:lang="fr">Polyfill pour RECHERCHEX. Recherche une valeur dans une matrice et renvoie une référence à une cellule ou à une plage de cellules.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">XLOOKUP</value>
+                        <value xml:lang="fr">RECHERCHEX</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="criterion" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Search criterion</value>
+                                <value xml:lang="fr">Critère de recherche</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The value of any type to search for in Array. If omitted, XLOOKUP returns blank cells it finds in Search Array.</value>
+                                <value xml:lang="fr">La valeur de tout type à rechercher dans Matrice. Si elle est omise, RECHERCHEX renvoie les cellules vides qu'elle trouve dans Matrice de recherche</value>
+                            </prop>
+                        </node>
+                        <node oor:name="searchRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Search Array</value>
+                                <value xml:lang="fr">Matrice de recherche</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The reference of the array to search. Array must be a 1-dimensional array and must be contained in one sheet only.</value>
+                                <value xml:lang="fr">La référence de la matrice à rechercher. La matrice doit être une matrice unidimensionnel et ne doit être contenu que dans une seule feuille.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="resultRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Result Array</value>
+                                <value xml:lang="fr">Matrice de résultats</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The reference of the array or range to return.</value>
+                                <value xml:lang="fr">La référence de la matrice ou de la plage à renvoyer.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="defaultValue" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Result if not found</value>
+                                <value xml:lang="fr">Résultat si non trouvé</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A text or cell content to return if the Lookup value is not found. If a valid match is not found and Result if not found is omitted, the function returns the #N/A error.</value>
+                                <value xml:lang="fr">Un texte ou un contenu de cellule à renvoyer si la valeur Recherche n'est pas trouvée. Si aucune correspondance valide n'est trouvée et que Résultat si non trouvé est omis, la fonction renvoie l'erreur #N/D.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="matchMode" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Match Mode</value>
+                                <value xml:lang="fr">Mode de correspondance</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">Specifies the match type. Values can be:
+* 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
+* -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
+* 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
+* 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
+* 3: a regular expression match.</value>
+                                <value xml:lang="fr">Spécifie le type de correspondance. Les valeurs peuvent être :
+* 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
+* -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
+* 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
+* 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
+* 3 : une correspondance d'expression régulière.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="searchMode" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Search Mode</value>
+                                <value xml:lang="fr">Mode de recherche</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">Specifies the search mode to use.
+* 1: returns the first occurrence starting from the first item of Search Array (default).
+* -1: reverse search. Returns the first occurrence starting from the last item of Search Array.
+* 2: binary search that relies on Search Array being sorted in ascending order. If not sorted, invalid results will be returned.
+* -2: binary search that relies on Search Array being sorted in descending order. If not sorted, invalid results will be returned.</value>
+                                <value xml:lang="fr">Spécifie le mode de recherche à utiliser.
+* 1 : renvoie la première occurrence à partir du premier élément de la matrice de recherche (par défaut).
+* -1 : recherche inversée. Renvoie la première occurrence à partir du dernier élément de la matrice de recherche.
+* 2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre croissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
+* -2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre décroissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopXMatch" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.XMATCH</value>
+                        <value xml:lang="fr">LOP.EQUIVX</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for XMATCH. Searches for a value in a one-dimensional array and returns the relative position of the item.</value>
+                        <value xml:lang="fr">Polyfill pour EQUIVX. Recherche une valeur dans une matrice unidimensionnelle et renvoie la position relative de l'élément.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">XMATCH</value>
+                        <value xml:lang="fr">EQUIVX</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="criterion" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Search criterion</value>
+                                <value xml:lang="fr">Critère de recherche</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The value of any type to search for in Array. If omitted, XLOOKUP returns blank cells it finds in Search Array.</value>
+                                <value xml:lang="fr">La valeur de tout type à rechercher dans Matrice. Si elle est omise, RECHERCHEX renvoie les cellules vides qu'elle trouve dans Matrice de recherche</value>
+                            </prop>
+                        </node>
+                        <node oor:name="searchRange" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Search Array</value>
+                                <value xml:lang="fr">Matrice de recherche</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The reference of the array to search. Array must be a 1-dimensional array and must be contained in one sheet only.</value>
+                                <value xml:lang="fr">La référence de la matrice à rechercher. La matrice doit être une matrice unidimensionnel et ne doit être contenu que dans une seule feuille.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="matchMode" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Match Mode</value>
+                                <value xml:lang="fr">Mode de correspondance</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">Specifies the match type. Values can be:
+* 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
+* -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
+* 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
+* 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
+* 3: a regular expression match.</value>
+                                <value xml:lang="fr">Spécifie le type de correspondance. Les valeurs peuvent être :
+* 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
+* -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
+* 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
+* 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
+* 3 : une correspondance d'expression régulière.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="searchMode" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Search Mode</value>
+                                <value xml:lang="fr">Mode de recherche</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">Specifies the search mode to use.
+* 1: returns the first occurrence starting from the first item of Search Array (default).
+* -1: reverse search. Returns the first occurrence starting from the last item of Search Array.
+* 2: binary search that relies on Search Array being sorted in ascending order. If not sorted, invalid results will be returned.
+* -2: binary search that relies on Search Array being sorted in descending order. If not sorted, invalid results will be returned.</value>
+                                <value xml:lang="fr">Spécifie le mode de recherche à utiliser.
+* 1 : renvoie la première occurrence à partir du premier élément de la matrice de recherche (par défaut).
+* -1 : recherche inversée. Renvoie la première occurrence à partir du dernier élément de la matrice de recherche.
+* 2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre croissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
+* -2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre décroissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+            </node>
+        </node>
+    </node>
+</oor:component-data>

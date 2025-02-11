@@ -1,0 +1,10 @@
+.venv
+dest
+__pycache__
+.idea
+links.md
+git statu
+.~lock.*
+*.oxt
+*.ods
+!lopolyfill_examples.ods

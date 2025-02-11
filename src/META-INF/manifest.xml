@@ -1,0 +1,10 @@
+<manifest:manifest>
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-typelibrary;type=RDB" 
+	manifest:full-path="lopolyfill.rdb"/>
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+	manifest:full-path="lopolyfill.xcu"/>
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=Python" 
+	manifest:full-path="LoPolyfill.py"/>
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=Python"
+	manifest:full-path="lopolyfill_funcs.py"/>
+</manifest:manifest>
