@@ -18,14 +18,17 @@
 # taken from the LibreOffice help pages ( Mozilla Public License v2.0).
 import logging
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Sequence, Tuple, List
 
 import unohelper
 from com.github.jferard.lopolyfill import XLoPolyfill
+from com.sun.star.beans import XPropertySet
 from com.sun.star.lang import IllegalArgumentException
+from com.sun.star.i18n import XCollator
 
 from lopolyfill_funcs import (
-    LopFilter, LopRandarray, LopSequence, LopSort, LopUnique, LopXMatch)
+    LopFilter, LopRandarray, LopSequence, LopSort, LopUnique, LopXMatch,
+    LopArrayHandling, DataArray, DataRow)
 
 
 class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
@@ -34,46 +37,41 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
 
     # FILTER https://help.libreoffice.org/master/en-US/text/scalc/01/func_filter.html
     def lopFilter(
-            self, inRange: Sequence[Sequence[Any]],
-            criteria: Sequence[Sequence[Any]], defaultValue: Any):
+            self, inRange: DataArray,
+            criteria: DataArray, defaultValue: Any
+    ) -> DataArray:
         return LopFilter(IllegalArgumentException).execute(
             inRange, criteria, defaultValue)
 
     # RANDARRAY https://help.libreoffice.org/master/en-US/text/scalc/01/func_randarray.html
     def lopRandarray(self, rows: Any, columns: Any, minValue: Any,
-                     maxValue: Any, integers: Any):
+                     maxValue: Any, integers: Any
+                     ) -> DataArray:
         return LopRandarray(IllegalArgumentException).execute(
             rows, columns, minValue, maxValue, integers)
 
     # SEQUENCE https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sequence.html
     def lopSequence(
-            self, rows: int, columns: int, start: Any, step: Any):
+            self, rows: int, columns: int, start: Any, step: Any
+    ) -> DataArray:
         return LopSequence(IllegalArgumentException).execute(
             rows, columns, start, step)
 
     def lopSort(
-            self, inRange: Sequence[Sequence[Any]], sortIndex: Any,
-            sortOrder: Any, byCol: Any):
-        oCollator = self._get_collator_from_doc()
+            self,
+            oDoc: XPropertySet,
+            inRange: DataArray,
+            sortIndex: Any, sortOrder: Any, byCol: Any
+    ) -> DataArray:
+        oCollator = self._get_collator_from_doc(oDoc)
         return LopSort(oCollator, IllegalArgumentException).sort(
             inRange, sortIndex, sortOrder, byCol)
 
-    def _get_collator_from_doc(self):
-        oDesktop = self.ctxt.getByName(
-            "/singletons/com.sun.star.frame.theDesktop")
-        oDoc = oDesktop.CurrentComponent
-        ignore_case = oDoc.CharLocale
-        oLocale = oDoc.CharLocale
-
-        oServiceManager = self.ctxt.ServiceManager
-        oCollator = oServiceManager.createInstance(
-            "com.sun.star.i18n.Collator")
-        oCollator.loadDefaultCollator(oLocale, 1 if ignore_case else 0)
-        return oCollator
-
     def lopSortBy(
-            self, inRange: Sequence[Sequence[Any]],
-            sortByRange1: Sequence[Sequence[Any]], sortOrder1: int,
+            self,
+            oDoc: XPropertySet,
+            inRange: DataArray,
+            sortByRange1: DataArray, sortOrder1: int,
             sortByRange2: Any, sortOrder2: Any,
             sortByRange3: Any, sortOrder3: Any,
             sortByRange4: Any, sortOrder4: Any,
@@ -88,8 +86,8 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
             sortByRange13: Any, sortOrder13: Any,
             sortByRange14: Any, sortOrder14: Any,
             sortByRange15: Any, sortOrder15: Any,
-    ):
-        oCollator = self._get_collator_from_doc()
+    ) -> DataArray:
+        oCollator = self._get_collator_from_doc(oDoc)
         return LopSort(oCollator, IllegalArgumentException).sort_by(
             inRange,
             sortByRange1, sortOrder1, sortByRange2, sortOrder2,
@@ -103,39 +101,122 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
         )
 
     def lopUnique(
-            self, inRange: Sequence[Sequence[Any]], byCol: Any, uniqueness: Any
-    ):
+            self, inRange: DataArray, byCol: Any, uniqueness: Any
+    ) -> DataArray:
         return LopUnique(IllegalArgumentException).execute(
             inRange, byCol, uniqueness)
 
     def lopXLookup(
-            self, criterion: Any,
-            searchRange: Sequence[Sequence[Any]],
-            resultRange: Sequence[Sequence[Any]],
+            self,
+            oDoc: XPropertySet,
+            criterion: Any,
+            searchRange: DataArray,
+            resultRange: DataArray,
             defaultValue: Any,
             matchMode: Any,
             searchMode: Any
-    ):
-        oCollator = self._get_collator_from_doc()
+    ) -> DataArray:
+        oCollator = self._get_collator_from_doc(oDoc)
         return LopXMatch(oCollator, IllegalArgumentException).lookup(
-            criterion, searchRange, resultRange,defaultValue, matchMode, searchMode)
+            criterion, searchRange, resultRange, defaultValue, matchMode,
+            searchMode)
 
     def lopXMatch(
-            self, criterion: Any,
-            searchRange: Sequence[Sequence[Any]],
+            self,
+            oDoc: XPropertySet,
+            criterion: Any,
+            searchRange: DataArray,
             matchMode: Any,
             searchMode: Any
     ):
-        oCollator = self._get_collator_from_doc()
+        oCollator = self._get_collator_from_doc(oDoc)
         return LopXMatch(oCollator, IllegalArgumentException).match(
             criterion, searchRange, matchMode, searchMode)
 
+    def lopChooseCols(
+            self, array: DataArray, column1: int,
+            column2: Any, column3: Any, column4: Any, column5: Any,
+            column6: Any, column7: Any, column8: Any, column9: Any,
+            column10: Any, column11: Any, column12: Any, column13: Any,
+            column14: Any, column15: Any, column16: Any, column17: Any,
+            column18: Any, column19: Any, column20: Any, column21: Any,
+            column22: Any, column23: Any, column24: Any, column25: Any,
+            column26: Any, column27: Any, column28: Any, column29: Any,
+            column30: Any,
+    ) -> List[List[Any]]:
+        return LopArrayHandling(IllegalArgumentException).choose_cols(
+            array, column1,
+            column2, column3, column4, column5,
+            column6, column7, column8, column9,
+            column10, column11, column12, column13,
+            column14, column15, column16, column17,
+            column18, column19, column20, column21,
+            column22, column23, column24, column25,
+            column26, column27, column28, column29,
+            column30)
 
-def create_instance(ctx):
+    def lopChooseRows(
+            self, array: DataArray, row1: int,
+            row2: Any, row3: Any, row4: Any, row5: Any,
+            row6: Any, row7: Any, row8: Any, row9: Any,
+            row10: Any, row11: Any, row12: Any, row13: Any,
+            row14: Any, row15: Any, row16: Any, row17: Any,
+            row18: Any, row19: Any, row20: Any, row21: Any,
+            row22: Any, row23: Any, row24: Any, row25: Any,
+            row26: Any, row27: Any, row28: Any, row29: Any,
+            row30: Any,
+    ) -> List[List[Any]]:
+        return LopArrayHandling(IllegalArgumentException).choose_rows(
+            array, row1,
+            row2, row3, row4, row5,
+            row6, row7, row8, row9,
+            row10, row11, row12, row13,
+            row14, row15, row16, row17,
+            row18, row19, row20, row21,
+            row22, row23, row24, row25,
+            row26, row27, row28, row29,
+            row30)
+
+    def lopDrop(
+            self, array: DataArray, rows: Any,
+            columns: Any,
+    ) -> List[DataRow]:
+        return LopArrayHandling(IllegalArgumentException).drop(
+            array, rows, columns)
+
+    def lopTake(
+            self, array: DataArray, rows: Any,
+            columns: Any,
+    ) -> List[DataRow]:
+        return LopArrayHandling(IllegalArgumentException).take(
+            array, rows, columns)
+
+    def lopExpand(
+            self, array: DataArray, rows: Any,
+            columns: Any, pad_with: Any
+    ) -> List[DataRow]:
+        return LopArrayHandling(IllegalArgumentException).expand(
+            array, rows, columns, pad_with)
+
+    def _get_collator_from_doc(
+            self, oDoc: XPropertySet, ignore_case: bool = True) -> XCollator:
+        oServiceManager = self.ctxt.ServiceManager
+        oCollator = oServiceManager.createInstance(
+            "com.sun.star.i18n.Collator")
+
+        oLocale = oDoc.CharLocale
+        oCollator.loadDefaultCollator(oLocale, 1 if ignore_case else 0)
+
+        return oCollator
+
+
+def create_instance(ctxt):
     logging.basicConfig(filename=str(Path.home() / "lopolyfill.log"),
                         encoding='utf-8',
                         level=logging.DEBUG, filemode="w")
-    return LoPolyfillImpl(ctx)
+    logging.getLogger(__name__).debug("Instance creation")
+    ret = LoPolyfillImpl(ctxt)
+    return ret
 
 
 g_ImplementationHelper = unohelper.ImplementationHelper()
@@ -143,3 +224,16 @@ g_ImplementationHelper.addImplementation(
     create_instance, "com.github.jferard.lopolyfill.LoPolyfillImpl",
     ("com.sun.star.sheet.AddIn",),
 )
+
+
+class SimpleCollator:
+    @staticmethod
+    def compareString(s1: str, s2: str) -> int:
+        s1 = s1.casefold()
+        s2 = s2.casefold()
+        if s1 < s2:
+            return -1
+        elif s1 > s2:
+            return 1
+        else:
+            return 0

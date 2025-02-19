@@ -349,7 +349,7 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">A number indicating the desired sort order; 1 for ascending order (default), -1 for descending order.</value>
-                                 <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
+                                <value xml:lang="fr">Ordre à utiliser pour le tri. 1 pour croissant, -1 pour décroissant. La valeur par défaut est croissante.</value>
                             </prop>
                         </node>
                         <node oor:name="sortByRange5" oor:op="replace">
@@ -687,17 +687,19 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">Specifies the match type. Values can be:
-* 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
-* -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
-* 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
-* 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
-* 3: a regular expression match.</value>
+                                    * 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
+                                    * -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
+                                    * 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
+                                    * 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
+                                    * 3: a regular expression match.
+                                </value>
                                 <value xml:lang="fr">Spécifie le type de correspondance. Les valeurs peuvent être :
-* 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
-* -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
-* 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
-* 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
-* 3 : une correspondance d'expression régulière.</value>
+                                    * 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
+                                    * -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
+                                    * 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
+                                    * 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
+                                    * 3 : une correspondance d'expression régulière.
+                                </value>
                             </prop>
                         </node>
                         <node oor:name="searchMode" oor:op="replace">
@@ -707,15 +709,17 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">Specifies the search mode to use.
-* 1: returns the first occurrence starting from the first item of Search Array (default).
-* -1: reverse search. Returns the first occurrence starting from the last item of Search Array.
-* 2: binary search that relies on Search Array being sorted in ascending order. If not sorted, invalid results will be returned.
-* -2: binary search that relies on Search Array being sorted in descending order. If not sorted, invalid results will be returned.</value>
+                                    * 1: returns the first occurrence starting from the first item of Search Array (default).
+                                    * -1: reverse search. Returns the first occurrence starting from the last item of Search Array.
+                                    * 2: binary search that relies on Search Array being sorted in ascending order. If not sorted, invalid results will be returned.
+                                    * -2: binary search that relies on Search Array being sorted in descending order. If not sorted, invalid results will be returned.
+                                </value>
                                 <value xml:lang="fr">Spécifie le mode de recherche à utiliser.
-* 1 : renvoie la première occurrence à partir du premier élément de la matrice de recherche (par défaut).
-* -1 : recherche inversée. Renvoie la première occurrence à partir du dernier élément de la matrice de recherche.
-* 2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre croissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
-* -2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre décroissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.</value>
+                                    * 1 : renvoie la première occurrence à partir du premier élément de la matrice de recherche (par défaut).
+                                    * -1 : recherche inversée. Renvoie la première occurrence à partir du dernier élément de la matrice de recherche.
+                                    * 2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre croissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
+                                    * -2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre décroissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
+                                </value>
                             </prop>
                         </node>
                     </node>
@@ -764,17 +768,19 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">Specifies the match type. Values can be:
-* 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
-* -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
-* 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
-* 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
-* 3: a regular expression match.</value>
+                                    * 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
+                                    * -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
+                                    * 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
+                                    * 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
+                                    * 3: a regular expression match.
+                                </value>
                                 <value xml:lang="fr">Spécifie le type de correspondance. Les valeurs peuvent être :
-* 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
-* -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
-* 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
-* 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
-* 3 : une correspondance d'expression régulière.</value>
+                                    * 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
+                                    * -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
+                                    * 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
+                                    * 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
+                                    * 3 : une correspondance d'expression régulière.
+                                </value>
                             </prop>
                         </node>
                         <node oor:name="searchMode" oor:op="replace">
@@ -784,15 +790,708 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">Specifies the search mode to use.
-* 1: returns the first occurrence starting from the first item of Search Array (default).
-* -1: reverse search. Returns the first occurrence starting from the last item of Search Array.
-* 2: binary search that relies on Search Array being sorted in ascending order. If not sorted, invalid results will be returned.
-* -2: binary search that relies on Search Array being sorted in descending order. If not sorted, invalid results will be returned.</value>
+                                    * 1: returns the first occurrence starting from the first item of Search Array (default).
+                                    * -1: reverse search. Returns the first occurrence starting from the last item of Search Array.
+                                    * 2: binary search that relies on Search Array being sorted in ascending order. If not sorted, invalid results will be returned.
+                                    * -2: binary search that relies on Search Array being sorted in descending order. If not sorted, invalid results will be returned.
+                                </value>
                                 <value xml:lang="fr">Spécifie le mode de recherche à utiliser.
-* 1 : renvoie la première occurrence à partir du premier élément de la matrice de recherche (par défaut).
-* -1 : recherche inversée. Renvoie la première occurrence à partir du dernier élément de la matrice de recherche.
-* 2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre croissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
-* -2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre décroissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.</value>
+                                    * 1 : renvoie la première occurrence à partir du premier élément de la matrice de recherche (par défaut).
+                                    * -1 : recherche inversée. Renvoie la première occurrence à partir du dernier élément de la matrice de recherche.
+                                    * 2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre croissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
+                                    * -2 : recherche binaire qui repose sur le tri de la matrice de recherche par ordre décroissant. Si le tri n'est pas effectué, des résultats non valides seront renvoyés.
+                                </value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopChooseCols" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOPFT.CHOOSECOLS</value>
+                        <value xml:lang="fr">LOPFT.CHOISIRCOLS</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for CHOOSECOLS. Returns the specified columns from an array.</value>
+                        <value xml:lang="fr">Polyfill pour CHOISIRCOLS.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">CHOOSECOLS</value>
+                        <value xml:lang="fr">CHOISIRCOLS</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="array" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The array containing the columns to be returned in a new array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column1" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_1</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the first column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column2" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_2</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 2nd column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column3" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_3</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 3rd column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column4" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_4</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 4th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column5" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_5</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 5th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column6" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_6</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 6th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column7" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_7</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 7th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column8" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_8</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 8th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column9" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_9</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 9th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column10" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_10</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 10th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column11" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_11</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 11th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column12" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_12</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 12th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column13" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_13</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 13th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column14" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_14</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 14th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column15" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_15</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 15th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column16" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_16</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 16th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column17" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_17</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 17th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column18" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_18</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 18th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column19" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_19</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 19th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column20" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_20</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 20th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column21" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_21</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 21th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column22" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_22</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 22th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column23" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_23</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 23th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column24" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_24</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 24th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column25" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_25</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 25th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column26" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_26</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 26th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column27" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_27</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 27th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column28" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_28</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 28th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column29" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_29</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 29th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="column30" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Column_30</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 30th column to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopChooseRows" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOPFT.CHOOSEROWS</value>
+                        <value xml:lang="fr">LOPFT.CHOISIRLIGNES</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for CHOOSECOLS. Returns the specified rows from an array.</value>
+                        <value xml:lang="fr">Polyfill pour CHOISIRLIGNES.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">CHOOSEROWS</value>
+                        <value xml:lang="fr">CHOISIRLIGNES</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="array" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The array containing the rows to be returned in a new array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row1" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_1</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the first row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row2" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_2</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 2nd row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row3" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_3</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 3rd row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row4" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_4</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 4th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row5" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_5</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 5th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row6" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_6</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 6th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row7" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_7</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 7th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row8" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_8</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 8th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row9" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_9</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 9th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row10" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_10</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 10th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row11" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_11</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 11th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row12" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_12</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 12th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row13" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_13</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 13th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row14" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_14</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 14th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row15" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_15</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 15th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row16" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_16</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 16th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row17" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_17</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 17th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row18" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_18</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 18th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row19" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_19</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 19th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row20" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_20</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 20th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row21" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_21</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 21th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row22" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_22</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 22th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row23" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_23</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 23th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row24" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_24</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 24th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row25" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_25</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 25th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row26" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_26</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 26th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row27" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_27</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 27th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row28" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_28</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 28th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row29" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_29</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 29th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="row30" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Row_30</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The index of the 30th row to be returned. A negative value chooses from the end of the array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopDrop" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOPFT.DROP</value>
+                        <value xml:lang="fr">LOPFT.EXCLURE</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for DROP. Drops a specified number of contiguous rows or columns from the start or end of an array.</value>
+                        <value xml:lang="fr">Polyfill pour EXCLURE.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">DROP</value>
+                        <value xml:lang="fr">EXCLURE</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="array" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                                <value xml:lang="fr">Matrice</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The array or range from which to drop rows or columns.</value>
+                                <value xml:lang="fr">La matrice ou la plage de laquelle exclure les lignes ou les colonnes.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="rows" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Rows</value>
+                                <value xml:lang="fr">Lignes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number of rows to drop. A negative value drops from the end of the array.</value>
+                                <value xml:lang="fr">Le nombre de lignes à exclure. Une valeur négative exclut la fin de la matrice.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="columns" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Columns</value>
+                                <value xml:lang="fr">Colonnes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number of columns to drop. A negative value drops from the end of the array.</value>
+                                <value xml:lang="fr">Le nombre de colonnes à exclure. Une valeur négative exclut la fin du tableau.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopTake" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOPFT.TAKE</value>
+                        <value xml:lang="fr">LOPFT.PRENDRE</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for TAKE. Returns a specified number of contiguous rows or columns from the start or end of an array.</value>
+                        <value xml:lang="fr">Polyfill pour PRENDRE.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">TAKE</value>
+                        <value xml:lang="fr">PRENDRE</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="array" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                                <value xml:lang="fr">Matrice</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The array or range from which to take rows or columns.</value>
+                                <value xml:lang="fr">La matrice ou la plage de laquelle extraire les lignes ou les colonnes.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="rows" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Rows</value>
+                                <value xml:lang="fr">Lignes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number of rows to take. A negative value takes from the end of the array.</value>
+                                <value xml:lang="fr">Le nombre de lignes à prendre. Une valeur négative prend la fin de la matrice.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="columns" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Columns</value>
+                                <value xml:lang="fr">Colonnes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The number of columns to take. A negative value takes from the end of the array.</value>
+                                <value xml:lang="fr">Le nombre de colonnes à prendre. Une valeur négative prendre la fin du tableau.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
+                <node oor:name="lopExpand" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOPFT.EXPAND</value>
+                        <value xml:lang="fr">LOPFT.ETENDRE</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for EXPAND. Expand an array by adding rows or columns.</value>
+                        <value xml:lang="fr">Polyfill pour ETENDRE. Étendez une matrice en ajoutant des lignes ou des colonnes.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">EXPAND</value>
+                        <value xml:lang="fr">ETENDRE</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="array" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                                <value xml:lang="fr">Matrice</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The array or range to expand by the number of rows and/or columns.</value>
+                                <value xml:lang="fr">La matrice ou la plage à étendre en fonction du nombre de lignes et/ou de colonnes.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="rows" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Rows</value>
+                                <value xml:lang="fr">Lignes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The final number of rows the array will expand. Default is total rows.</value>
+                                <value xml:lang="fr">Le nombre final de lignes par lequel la matrice va s'étendre. La valeur par défaut est le nombre total de lignes.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="columns" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Columns</value>
+                                <value xml:lang="fr">Colonnes</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The final number of columns the array will expand. Default is total columns.</value>
+                                <value xml:lang="fr">Le nombre final de colonnes par lequel la matrice va s'étendre. La valeur par défaut est le nombre total de colonnes.</value>
+                            </prop>
+                        </node>
+                        <node oor:name="padWith" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Pad_with</value>
+                                <value xml:lang="fr">Remplir_par</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">A specified value to pad in new cells. By default, #N/A is used to fill the new cells.</value>
+                                <value xml:lang="fr">Une valeur spécifiée pour remplir les nouvelles cellules. Par défaut, #N/D est utilisé pour remplir les nouvelles cellules.</value>
                             </prop>
                         </node>
                     </node>

@@ -20,16 +20,37 @@ import collections
 import enum
 import functools
 import itertools
+import logging
 import random
 from typing import Sequence, Any, Callable, List, Tuple, Optional, Iterable
+
+DataRow = Tuple[Any, ...]
+DataArray = Tuple[DataRow, ...]
+
+
+def debug(func):
+    logger = logging.getLogger(__name__)
+
+    def aux(*args, **kwargs):
+        logger.debug("call(%s, %s)", args, kwargs)
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            logger.exception("LoPolyfill")
+            raise
+        finally:
+            logger.debug("ok")
+
+    return aux
 
 
 class LopFilter:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
-    def execute(self, rows: Sequence[Sequence[Any]],
-                criteria: Sequence[Sequence[Any]], default_value: Any):
+    @debug
+    def execute(self, rows: DataArray,
+                criteria: DataArray, default_value: Any):
         assert rows and rows[0]
 
         orientation = get_orientation(criteria, rows)
@@ -61,6 +82,7 @@ class LopRandarray:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
+    @debug
     def execute(
             self, row_count: Any, column_count: Any, min_value: Any,
             max_value: Any, integers: Any):
@@ -82,7 +104,7 @@ class LopRandarray:
             min_value = 0
         if max_value is None:
             max_value = 1
-        if integers is None or integers:
+        if integers:
             _minValue = int(min_value)
             _maxValue = int(max_value)
 
@@ -102,6 +124,7 @@ class LopSequence:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
+    @debug
     def execute(
             self, rows: int, columns: int, start: Any, step: Any):
         if rows < 1:
@@ -134,8 +157,9 @@ class LopSort:
         self._oCollator = oCollator
         self._illegal_argument_exception = illegal_argument_exception
 
+    @debug
     def sort(
-            self, in_range: Sequence[Sequence[Any]], sort_index: Any,
+            self, in_range: DataArray, sort_index: Any,
             sort_order: Any, by_col: Any):
         # ascending: Number / String / Error
         # desc: Error / Number / String
@@ -167,15 +191,15 @@ class LopSort:
         return ascending
 
     def _by_col_lop_sort(
-            self, inRange: Sequence[Sequence[Any]], sortIndex: int,
+            self, inRange: DataArray, sortIndex: int,
             ascending: bool):
         cols = list(zip(*inRange))
         sorted_cols = self._by_row_lop_sort(cols, sortIndex, ascending)
         return list(zip(*sorted_cols))
 
     def _by_row_lop_sort(
-            self, rows: Sequence[Sequence[Any]], sort_index: int,
-            ascending: bool):
+            self, rows: Sequence[DataRow], sort_index: int,
+            ascending: bool) -> List[DataRow]:
         if sort_index < 0 or sort_index >= len(rows[0]):
             raise self._illegal_argument_exception("SortIndex col")
 
@@ -188,23 +212,11 @@ class LopSort:
         return sorted(rows, key=functools.cmp_to_key(cmp_rows),
                       reverse=ascending is False)
 
+    @debug
     def sort_by(
-            self, inRange: Sequence[Sequence[Any]],
-            sortByRange1: Sequence[Sequence[Any]], sortOrder1: int,
-            sortByRange2: Any, sortOrder2: Any,
-            sortByRange3: Any, sortOrder3: Any,
-            sortByRange4: Any, sortOrder4: Any,
-            sortByRange5: Any, sortOrder5: Any,
-            sortByRange6: Any, sortOrder6: Any,
-            sortByRange7: Any, sortOrder7: Any,
-            sortByRange8: Any, sortOrder8: Any,
-            sortByRange9: Any, sortOrder9: Any,
-            sortByRange10: Any, sortOrder10: Any,
-            sortByRange11: Any, sortOrder11: Any,
-            sortByRange12: Any, sortOrder12: Any,
-            sortByRange13: Any, sortOrder13: Any,
-            sortByRange14: Any, sortOrder14: Any,
-            sortByRange15: Any, sortOrder15: Any,
+            self, inRange: DataArray,
+            sortByRange1: DataArray, sortOrder1: int,
+            *args: Any
     ):
         if not (inRange and inRange[0]):
             return inRange
@@ -215,25 +227,13 @@ class LopSort:
         w = len(inRange[0])
         byCol = self._is_by_col(sortByRange1, h, w)
         extract = self._create_extract(byCol, h, w)
+
+        sortByRanges = (sortByRange1,) + args[0::2]
+        sortOrders = (sortOrder1,) + args[1::2]
+
         sortKeys = [
             (extract(sortByRange), self._is_ascending(sortOrder))
-            for sortByRange, sortOrder in (
-                (sortByRange1, sortOrder1),
-                (sortByRange2, sortOrder2),
-                (sortByRange3, sortOrder3),
-                (sortByRange4, sortOrder4),
-                (sortByRange5, sortOrder5),
-                (sortByRange6, sortOrder6),
-                (sortByRange7, sortOrder7),
-                (sortByRange8, sortOrder8),
-                (sortByRange9, sortOrder9),
-                (sortByRange10, sortOrder10),
-                (sortByRange11, sortOrder11),
-                (sortByRange12, sortOrder12),
-                (sortByRange13, sortOrder13),
-                (sortByRange14, sortOrder14),
-                (sortByRange15, sortOrder15),
-            )
+            for sortByRange, sortOrder in zip(sortByRanges, sortOrders)
             if sortByRange is not None
         ]
         if byCol:
@@ -244,7 +244,7 @@ class LopSort:
             return self._by_row_lop_sortby(inRange, sortKeys)
 
     def _is_by_col(
-            self, sortByRange1: Sequence[Sequence[Any]], h: int, w: int
+            self, sortByRange1: DataArray, h: int, w: int
     ) -> bool:
         if len(sortByRange1) == h:
             byCol = False
@@ -256,28 +256,28 @@ class LopSort:
 
     def _create_extract(
             self, byCol: bool, h: int, w: int
-    ) -> Callable[[Sequence[Sequence[Any]]], Sequence[Any]]:
+    ) -> Callable[[DataArray], Sequence[Any]]:
         if byCol:
-            def extract(sortByRange: Sequence[Sequence[Any]]) -> Sequence[Any]:
+            def extract(sortByRange: DataArray) -> Sequence[Any]:
                 if len(sortByRange) != 1 or len(sortByRange[0]) != w:
                     raise self._illegal_argument_exception("sortRange")
                 return sortByRange[0]
         else:
-            def extract(sortByRange: Sequence[Sequence[Any]]) -> Sequence[Any]:
+            def extract(sortByRange: DataArray) -> Sequence[Any]:
                 if len(sortByRange) != h or len(sortByRange[0]) != 1:
                     raise self._illegal_argument_exception("sortRange")
                 return [row[0] for row in sortByRange]
         return extract
 
     def _by_row_lop_sortby(
-            self, rows: Sequence[Sequence[Any]],
-            sortKeys: List[Tuple[Any, bool]]
-    ) -> Sequence[Sequence[Any]]:
+            self, rows: Sequence[DataRow],
+            sort_keys: List[Tuple[Any, bool]]
+    ) -> List[DataRow]:
         cmp_values_with_collator = create_cmp_values_with_collator(
             self._oCollator)
 
         def cmp_integers(i: int, j: int) -> int:
-            for values, ascending in sortKeys:
+            for values, ascending in sort_keys:
                 c = cmp_values_with_collator(values[i], values[j])
                 if c != 0:
                     if ascending:
@@ -295,8 +295,9 @@ class LopUnique:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
+    @debug
     def execute(
-            self, in_range: Sequence[Sequence[Any]], by_col: Any,
+            self, in_range: DataArray, by_col: Any,
             uniqueness: Any
     ):
         if uniqueness is None:
@@ -353,10 +354,11 @@ class LopXMatch:
         self._oCollator = oCollator
         self._illegal_argument_exception = illegal_argument_exception
 
+    @debug
     def lookup(
             self, criterion: Any,
-            search_range: Sequence[Sequence[Any]],
-            result_range: Sequence[Sequence[Any]],
+            search_range: DataArray,
+            result_range: DataArray,
             default_value: Any,
             match_mode: Any,
             search_mode: Any
@@ -399,25 +401,32 @@ class LopXMatch:
                 raise self._illegal_argument_exception("SearchModeMode")
         return search_mode
 
+    @debug
     def match(
             self, criterion: Any,
-            search_range: Sequence[Sequence[Any]],
+            search_range: DataArray,
             match_mode: Any,
             search_mode: Any
-    ) -> Sequence[Sequence[int]]:
+    ) -> int:
         assert search_range and search_range[0]
 
-        if len(search_range[0]) == 1:
-            values = [row[0] for row in search_range]
-        else:
-            values = search_range[0]
+        values = self._extract_values(search_range)
 
         match_mode = self._get_match_mode(match_mode)
         search_mode = self._get_search_mode(search_mode)
 
         idx = self._match_value(criterion, values, match_mode, search_mode)
         ret = None if idx is None else idx + 1
-        return [[ret]]
+        return ret
+
+    def _extract_values(self, search_range):
+        if len(search_range[0]) == 1:
+            values = [row[0] for row in search_range]
+        elif len(search_range) == 1:
+            values = search_range[0]
+        else:
+            raise self._illegal_argument_exception("Search range")
+        return values
 
     def _match_value(self, criterion: Any, values: Sequence[Any],
                      match_mode: XMatchMode, search_mode: XSearchMode):
@@ -490,8 +499,9 @@ class IndexFinder:
                 return i
         return None
 
-    def _get_indices(self, values: Sequence[Any], reverse: bool) -> Iterable[
-        int]:
+    def _get_indices(
+            self, values: Sequence[Any], reverse: bool
+    ) -> Iterable[int]:
         if reverse:
             indices = range(len(values) - 1, -1, -1)
         else:
@@ -619,7 +629,7 @@ class IndexFinder:
         """Lookup for the first value using a cmp_values function"""
         # values[idx - 1] <= criterion < values[idx]
         idx = bisect_right(values, criterion, cmp_values)
-        if idx == 0:   # criterion < values[0]
+        if idx == 0:  # criterion < values[0]
             return None
 
         new_idx = idx - 1
@@ -668,6 +678,250 @@ class IndexFinder:
             ret = bisect_right(values, new_criterion, cmp_values) - 1
             return ret
 
+
+class Ignore(enum.IntEnum):
+    KEEP_ALL = 0
+    IGNORE_BLANKS = 1
+    IGNORE_ERRORS = 2
+    IGNORE_BLANKS_AND_ERRORS = 3
+
+
+class LopArrayHandling:
+    """
+    Future (25.8)
+    """
+
+    def __init__(self, illegal_argument_exception: Any):
+        self._illegal_argument_exception = illegal_argument_exception
+
+    def choose_cols(
+            self, rows: DataArray, col_index1: int, *cols_indices: Any
+    ) -> List[List[Any]]:
+        assert rows and rows[0]
+
+        cols_indices = [col_index1] + [
+            int(col_index) for col_index in cols_indices
+            if col_index is not None
+        ]
+        if any(i == 0 or i > len(rows[0]) or i <= -len(rows[0]) for i in
+               cols_indices):
+            raise self._illegal_argument_exception(
+                "Indices {}".format(cols_indices))
+
+        cols_indices = [i - 1 if i >= 1 else i for i in cols_indices]
+        return [
+            [row[i] for i in cols_indices]
+            for row in rows
+        ]
+
+    @debug
+    def choose_rows(
+            self, rows: DataArray, row_index1: int, *rows_indices: Any
+    ) -> List[List[Any]]:
+        assert rows and rows[0]
+
+        rows_indices = [row_index1] + [
+            int(row_index) for row_index in rows_indices
+            if row_index is not None
+        ]
+        if any(i == 0 or i > len(rows) or i <= -len(rows) for i in
+               rows_indices):
+            raise self._illegal_argument_exception(
+                "Indices {}".format(rows_indices))
+
+        rows_indices = [i - 1 if i >= 1 else i for i in rows_indices]
+        return [
+            rows[i] for i in rows_indices
+        ]
+
+    @staticmethod
+    def vstack(*arrays: DataArray) -> List[DataRow]:
+        assert arrays
+
+        w = max(len(rows[0]) for rows in arrays)
+        return [
+            row + (None,) * (w - len(row))
+            for row in itertools.chain(*arrays)
+        ]
+
+    @staticmethod
+    def hstack(*arrays: DataArray) -> List[List[Any]]:
+        assert arrays
+
+        h = max(len(rows) for rows in arrays)
+        return [
+            [
+                v
+                for rows in arrays
+                for v in (rows[i] if i < len(rows) else (None,) * len(rows[0]))
+            ]
+            for i in range(h)
+        ]
+
+    @debug
+    def drop(
+            self, rows: DataArray, row_count: int, col_count: Any
+    ) -> List[DataRow]:
+        if row_count is None:
+            selected_rows = rows
+        else:
+            row_count = int(row_count)
+            if row_count > 0:
+                selected_rows = rows[row_count:]
+            elif row_count < 0:
+                selected_rows = rows[:row_count]
+            else:
+                raise self._illegal_argument_exception("Wrong row_count parameter")
+
+        if col_count is None:
+            return selected_rows
+
+        col_count = int(col_count)
+        if col_count > 0:
+            return [row[col_count:] for row in selected_rows]
+        elif col_count < 0:
+            return [row[:col_count] for row in selected_rows]
+        else:
+            raise self._illegal_argument_exception("Wrong col_count parameter")
+
+    @debug
+    def take(
+            self, rows: DataArray, row_count: int, col_count: int
+    ) -> List[DataRow]:
+        assert rows and rows[0]
+
+        if row_count is None:
+            selected_rows = rows
+        else:
+            row_count = int(row_count)
+            if row_count > 0:
+                selected_rows = rows[:row_count]
+            elif row_count < 0:
+                selected_rows = rows[row_count:]
+            else:
+                raise self._illegal_argument_exception("Wrong row_count parameter")
+
+        if col_count is None:
+            return selected_rows
+
+        col_count = int(col_count)
+        if col_count > 0:
+            return [row[:col_count] for row in selected_rows]
+        elif col_count < 0:
+            return [row[col_count:] for row in selected_rows]
+        else:
+            raise self._illegal_argument_exception("Wrong col_count parameter")
+
+    @debug
+    def expand(
+            self, rows: DataArray, row_count: Any, col_count: Any, pad_with: Any
+    ) -> List[DataRow]:
+        assert rows and rows[0]
+
+        if row_count is None:
+            missing_row_count = 0
+        else:
+            row_count = int(row_count)
+            missing_row_count = row_count - len(rows)
+            if missing_row_count < 0:
+                raise self._illegal_argument_exception("Row count")
+
+        if col_count is None:
+            col_count = len(rows[0])
+            missing_row_count = 0
+            pad_col = tuple()
+        else:
+            col_count = int(col_count)
+            missing_col_count = col_count - len(rows[0])
+            if missing_col_count < 0:
+                raise self._illegal_argument_exception("Row count")
+            pad_col = (pad_with,) * missing_col_count
+
+        padding_row = [(pad_with,) * col_count]
+        return [
+            row + pad_col
+            for row in rows
+        ] + padding_row * missing_row_count
+
+    def wraps_cols(
+            self, rows: DataArray, wrap_count: int, pad_with: Any
+    ) -> List[List[Any]]:
+        assert rows and rows[0]
+
+        values = self._extract_values(rows)
+        d, m = divmod(len(values), wrap_count)
+        if m != 0:
+            d += 1
+            values = values + (pad_with,) * (wrap_count - m)
+
+        return [
+            [values[j] for j in range(i, len(values), wrap_count)]
+            for i in range(wrap_count)
+        ]
+
+    def _extract_values(self, rows: DataArray) -> DataRow:
+        if len(rows[0]) == 1:
+            values = tuple([row[0] for row in rows])
+        elif len(rows) == 1:
+            values = rows[0]
+        else:
+            raise self._illegal_argument_exception("Expect a vector")
+        return values
+
+    def wraps_rows(
+            self, rows: DataArray, wrap_count: int, pad_with: Any
+    ) -> List[DataRow]:
+        assert rows and rows[0]
+
+        values = self._extract_values(rows)
+        d, m = divmod(len(values), wrap_count)
+        if m != 0:
+            d += 1
+            values = values + (pad_with,) * (wrap_count - m)
+
+        return [
+            values[i:i + wrap_count]
+            for i in range(0, len(values), wrap_count)
+        ]
+
+    def to_col(
+            self, rows: DataArray, ignore: int, scan_by_col: bool
+    ) -> List[List[Any]]:
+        dont_ignore = self._get_dont_ignore_func(ignore)
+
+        if scan_by_col:
+            return [[x] for x in itertools.chain(*zip(*rows)) if
+                    dont_ignore(x)]
+        else:
+            return [[x] for x in itertools.chain(*rows) if dont_ignore(x)]
+
+    def to_row(
+            self, rows: DataArray, ignore: int, scan_by_col: bool
+    ) -> List[List[Any]]:
+        dont_ignore = self._get_dont_ignore_func(ignore)
+
+        if scan_by_col:
+            return [
+                [x for x in itertools.chain(*zip(*rows)) if dont_ignore(x)]]
+        else:
+            return [[x for x in itertools.chain(*rows) if dont_ignore(x)]]
+
+    def _get_dont_ignore_func(self, ignore: int) -> Callable[[Any], bool]:
+        if ignore == Ignore.IGNORE_BLANKS:
+            def dont_ignore(x):
+                return x != ''
+        elif ignore == Ignore.IGNORE_ERRORS:
+            def dont_ignore(x):
+                return x is not None
+        elif ignore == Ignore.IGNORE_BLANKS_AND_ERRORS:
+            def dont_ignore(x):
+                return x != '' and x is not None
+        elif ignore is None or ignore == Ignore.KEEP_ALL:
+            def dont_ignore(x):
+                return True
+        else:
+            raise self._illegal_argument_exception("Ignore")
+        return dont_ignore
 
 
 def create_cmp_values_with_collator(oCollator) -> Callable[[Any, Any], int]:
@@ -727,8 +981,8 @@ class Orientation(enum.Enum):
 
 
 def get_orientation(
-        row_or_col_range: Sequence[Sequence[Any]],
-        base_range: Sequence[Sequence[Any]]
+        row_or_col_range: DataArray,
+        base_range: DataArray
 ) -> Optional[Orientation]:
     if len(row_or_col_range) == len(base_range) and len(
             row_or_col_range[0]) == 1:  # it's a col

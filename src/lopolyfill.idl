@@ -1,4 +1,5 @@
 #include <com/sun/star/uno/XInterface.idl>
+#include <com/sun/star/lang/IllegalArgumentException.idl>
 #include <com/sun/star/beans/XPropertySet.idl>
 
 module com { module github { module jferard { module lopolyfill {
@@ -19,8 +20,8 @@ module com { module github { module jferard { module lopolyfill {
         sequence< sequence< any > > lopFilter(
             [in] sequence< sequence< any > > inRange,
             [in] sequence< sequence< any > > criteria,
-            [in] any defaultValue)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any defaultValue
+            ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // RANDARRAY https://help.libreoffice.org/master/en-US/text/scalc/01/func_randarray.html
         sequence< sequence< any > > lopRandarray(
@@ -28,27 +29,29 @@ module com { module github { module jferard { module lopolyfill {
             [in] any columns,
             [in] any minValue,
             [in] any maxValue,
-            [in] any integers)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any integers
+        ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // SEQUENCE https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sequence.html
         sequence< sequence< any > > lopSequence(
             [in] long rows,
             [in] long columns,
             [in] any start,
-            [in] any step)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any step
+        ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // SORT https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sort.html
         sequence< sequence< any > > lopSort(
+            [in] com::sun::star::beans::XPropertySet oDoc,
             [in] sequence< sequence< any > > inRange,
             [in] any sortIndex,
             [in] any sortOrder,
-            [in] any byCol)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any byCol
+        ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // SORTBY https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_sortby.html
         sequence< sequence< any > > lopSortBy(
+            [in] com::sun::star::beans::XPropertySet oDoc,
             [in] sequence< sequence< any > > inRange,
             [in] sequence< sequence< any > > sortByRange1,
             [in] long sortOrder1,
@@ -80,33 +83,126 @@ module com { module github { module jferard { module lopolyfill {
             [in] any sortOrder14,
             [in] any sortByRange15,
             [in] any sortOrder15
-            )
-            raises( com::sun::star::lang::IllegalArgumentException );
+        ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // UNIQUE https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_unique.html
         sequence< sequence< any > > lopUnique(
             [in] sequence< sequence< any > > inRange,
             [in] any byCol,
-            [in] any uniqueness)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any uniqueness
+        ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // XLOOKUP https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_xlookup.html
         sequence< sequence< any > > lopXLookup(
+            [in] com::sun::star::beans::XPropertySet oDoc,
             [in] any criterion,
             [in] sequence< sequence< any > > searchRange,
             [in] sequence< sequence< any > > resultRange,
             [in] any defaultValue,
             [in] any matchMode,
-            [in] any searchMode)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any searchMode
+        ) raises( com::sun::star::lang::IllegalArgumentException );
 
         // XMATCH https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_xmatch.html
-        sequence< sequence< any > > lopXMatch(
+        long lopXMatch(
+            [in] com::sun::star::beans::XPropertySet oDoc,
             [in] any criterion,
             [in] sequence< sequence< any > > searchRange,
             [in] any matchMode,
-            [in] any searchMode)
-            raises( com::sun::star::lang::IllegalArgumentException );
+            [in] any searchMode
+        ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // CHOOSECOLS https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_choosecols.html
+        sequence< sequence< any > > lopChooseCols(
+            [in] sequence< sequence< any > > array,
+            [in] long column1,
+            [in] any column2,
+            [in] any column3,
+            [in] any column4,
+            [in] any column5,
+            [in] any column6,
+            [in] any column7,
+            [in] any column8,
+            [in] any column9,
+            [in] any column10,
+            [in] any column11,
+            [in] any column12,
+            [in] any column13,
+            [in] any column14,
+            [in] any column15,
+            [in] any column16,
+            [in] any column17,
+            [in] any column18,
+            [in] any column19,
+            [in] any column20,
+            [in] any column21,
+            [in] any column22,
+            [in] any column23,
+            [in] any column24,
+            [in] any column25,
+            [in] any column26,
+            [in] any column27,
+            [in] any column28,
+            [in] any column29,
+            [in] any column30
+        ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // CHOOSEROWS https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_chooserows.html
+        sequence< sequence< any > > lopChooseRows(
+            [in] sequence< sequence< any > > array,
+            [in] long row1,
+            [in] any row2,
+            [in] any row3,
+            [in] any row4,
+            [in] any row5,
+            [in] any row6,
+            [in] any row7,
+            [in] any row8,
+            [in] any row9,
+            [in] any row10,
+            [in] any row11,
+            [in] any row12,
+            [in] any row13,
+            [in] any row14,
+            [in] any row15,
+            [in] any row16,
+            [in] any row17,
+            [in] any row18,
+            [in] any row19,
+            [in] any row20,
+            [in] any row21,
+            [in] any row22,
+            [in] any row23,
+            [in] any row24,
+            [in] any row25,
+            [in] any row26,
+            [in] any row27,
+            [in] any row28,
+            [in] any row29,
+            [in] any row30
+        ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // DROP https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_drop.html
+        sequence< sequence< any > > lopDrop(
+            [in] sequence< sequence< any > > array,
+            [in] any rows,
+            [in] any columns
+        ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // TAKE https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_take.html
+        sequence< sequence< any > > lopTake(
+            [in] sequence< sequence< any > > array,
+            [in] any rows,
+            [in] any columns
+        ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // EXPAND https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_expand.html
+        sequence< sequence< any > > lopExpand(
+            [in] sequence< sequence< any > > array,
+            [in] any rows,
+            [in] any columns,
+            [in] any padWith
+        ) raises( com::sun::star::lang::IllegalArgumentException );
     };
 
 }; }; }; };

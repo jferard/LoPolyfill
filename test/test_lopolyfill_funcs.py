@@ -20,12 +20,33 @@
 import itertools
 import unittest
 
-from lopolyfill_funcs import XSearchMode, XMatchMode, IndexFinder
+from lopolyfill_funcs import XSearchMode, XMatchMode, IndexFinder, \
+    LopArrayHandling, Ignore
 from pythonpath.lopolyfill_funcs import (
     LopFilter, LopRandarray, LopSort, LopUnique, LopXMatch
 )
 
-SIMPLE_2_2_ARRAY = [[1, 2], [3, 4]]
+DATA_1 = tuple([
+    tuple(["{}{}".format(chr(j + ord("A")), i) for j in range(5)])
+    for i in range(1, 5)
+])
+
+DATA_2 = tuple([
+    tuple(["{}{}".format(chr(j + ord("A")), i) for j in range(3)])
+    for i in range(11, 16)
+])
+
+COLUMN_1 = tuple([
+    tuple(["{}{}".format(chr(j + ord("A")), i) for j in range(1)])
+    for i in range(21, 41)
+])
+
+ROW_1 = tuple([
+    tuple(["{}{}".format(chr(j + ord("A")), i) for j in range(20)])
+    for i in range(1, 2)
+])
+
+SIMPLE_2_2_ARRAY = tuple([tuple([1, 2]), tuple([3, 4])])
 
 
 class LopFilterTestCase(unittest.TestCase):
@@ -55,10 +76,10 @@ class LopFilterTestCase(unittest.TestCase):
 
     def test_rows(self):
         f = LopFilter(ValueError).execute
-        self.assertEqual([[1, 2], [3, 4]],
+        self.assertEqual([(1, 2), (3, 4)],
                          f(SIMPLE_2_2_ARRAY, [[1], [1]], "default"))
-        self.assertEqual([[1, 2]], f(SIMPLE_2_2_ARRAY, [[1], [0]], "default"))
-        self.assertEqual([[3, 4]], f(SIMPLE_2_2_ARRAY, [[0], [1]], "default"))
+        self.assertEqual([(1, 2)], f(SIMPLE_2_2_ARRAY, [[1], [0]], "default"))
+        self.assertEqual([(3, 4)], f(SIMPLE_2_2_ARRAY, [[0], [1]], "default"))
 
     def test_cols(self):
         f = LopFilter(ValueError).execute
@@ -635,6 +656,160 @@ class IndexFinderTestCase(unittest.TestCase):
         self.assertEqual(2, finder.binary_find_index(2.5, values,
                                                      XMatchMode.LARGER,
                                                      reverse=True))
+
+
+class LopArrayHandlingTestCase(unittest.TestCase):
+    def test_choose_cols(self):
+        self.assertEqual([
+            ['A1', 'C1', 'A1', 'E1'],
+            ['A2', 'C2', 'A2', 'E2'],
+            ['A3', 'C3', 'A3', 'E3'],
+            ['A4', 'C4', 'A4', 'E4']
+        ], LopArrayHandling(ValueError).choose_cols(DATA_1, 1, 3, 1, -1))
+
+    def test_choose_rows(self):
+        self.assertEqual([
+            ('A1', 'B1', 'C1', 'D1', 'E1'),
+            ('A3', 'B3', 'C3', 'D3', 'E3'),
+            ('A1', 'B1', 'C1', 'D1', 'E1'),
+            ('A4', 'B4', 'C4', 'D4', 'E4')
+        ], LopArrayHandling(ValueError).choose_rows(DATA_1, 1, 3, 1, -1))
+
+    def test_vstack(self):
+        self.assertEqual([
+            ('A1', 'B1', 'C1', 'D1', 'E1'),
+            ('A2', 'B2', 'C2', 'D2', 'E2'),
+            ('A3', 'B3', 'C3', 'D3', 'E3'),
+            ('A4', 'B4', 'C4', 'D4', 'E4'),
+            ('A11', 'B11', 'C11', None, None),
+            ('A12', 'B12', 'C12', None, None),
+            ('A13', 'B13', 'C13', None, None),
+            ('A14', 'B14', 'C14', None, None),
+            ('A15', 'B15', 'C15', None, None)
+        ], LopArrayHandling(ValueError).vstack(DATA_1, DATA_2))
+
+    def test_hstack(self):
+        self.assertEqual([
+            ['A1', 'B1', 'C1', 'D1', 'E1', 'A11', 'B11', 'C11'],
+            ['A2', 'B2', 'C2', 'D2', 'E2', 'A12', 'B12', 'C12'],
+            ['A3', 'B3', 'C3', 'D3', 'E3', 'A13', 'B13', 'C13'],
+            ['A4', 'B4', 'C4', 'D4', 'E4', 'A14', 'B14', 'C14'],
+            [None, None, None, None, None, 'A15', 'B15', 'C15']
+        ],
+            LopArrayHandling(ValueError).hstack(DATA_1, DATA_2))
+
+    def test_drop(self):
+        self.assertEqual([
+            ('A2', 'B2', 'C2', 'D2'),
+            ('A3', 'B3', 'C3', 'D3'),
+            ('A4', 'B4', 'C4', 'D4')
+        ], LopArrayHandling(ValueError).drop(DATA_1, 1, -1))
+
+    def test_take(self):
+        self.assertEqual([
+            ('D1', 'E1'), ('D2', 'E2')
+        ], LopArrayHandling(ValueError).take(DATA_1, 2, -2))
+
+    def test_expand(self):
+        self.assertEqual([
+            ['A11', 'B11', 'C11', None],
+            ['A12', 'B12', 'C12', None],
+            ['A13', 'B13', 'C13', None],
+            ['A14', 'B14', 'C14', None],
+            ['A15', 'B15', 'C15', None],
+            [None, None, None, None]
+        ], LopArrayHandling(ValueError).expand(DATA_2, 6, 4))
+
+    def test_wrap_cols(self):
+        self.assertEqual([
+            ['A21', 'A28', 'A35'],
+            ['A22', 'A29', 'A36'],
+            ['A23', 'A30', 'A37'],
+            ['A24', 'A31', 'A38'],
+            ['A25', 'A32', 'A39'],
+            ['A26', 'A33', 'A40'],
+            ['A27', 'A34', 'foo']
+        ], LopArrayHandling(ValueError).wraps_cols(
+            COLUMN_1, 7, "foo"))
+        self.assertEqual([
+            ['A21', 'A25', 'A29', 'A33', 'A37'],
+            ['A22', 'A26', 'A30', 'A34', 'A38'],
+            ['A23', 'A27', 'A31', 'A35', 'A39'],
+            ['A24', 'A28', 'A32', 'A36', 'A40']
+        ], LopArrayHandling(ValueError).wraps_cols(
+            COLUMN_1, 4, "foo"))
+
+    def test_wrap_rows(self):
+        self.assertEqual([
+            ('A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'),
+            ('H1', 'I1', 'J1', 'K1', 'L1', 'M1', 'N1'),
+            ('O1', 'P1', 'Q1', 'R1', 'S1', 'T1', 'foo')
+        ], LopArrayHandling(ValueError).wraps_rows(
+            ROW_1, 7, "foo"))
+
+    def test_to_col(self):
+        self.assertEqual([
+            ['A1'],
+            ['B1'],
+            ['C1'],
+            ['D1'],
+            ['E1'],
+            ['A2'],
+            ['B2'],
+            ['C2'],
+            ['D2'],
+            ['E2'],
+            ['A3'],
+            ['B3'],
+            ['C3'],
+            ['D3'],
+            ['E3'],
+            ['A4'],
+            ['B4'],
+            ['C4'],
+            ['D4'],
+            ['E4']
+        ], LopArrayHandling(ValueError).to_col(DATA_1, Ignore.KEEP_ALL, False))
+        self.assertEqual([
+            ['A1'],
+            ['A2'],
+            ['A3'],
+            ['A4'],
+            ['B1'],
+            ['B2'],
+            ['B3'],
+            ['B4'],
+            ['C1'],
+            ['C2'],
+            ['C3'],
+            ['C4'],
+            ['D1'],
+            ['D2'],
+            ['D3'],
+            ['D4'],
+            ['E1'],
+            ['E2'],
+            ['E3'],
+            ['E4']
+        ], LopArrayHandling(ValueError).to_col(DATA_1, Ignore.KEEP_ALL, True))
+        self.assertEqual([
+            [1], [''], [''], [3], [2], [None]
+        ], LopArrayHandling(ValueError).to_col(
+            ((1, '', 2), ('', 3, None)), Ignore.KEEP_ALL, True))
+        self.assertEqual([
+            [1], [3], [2], [None]
+        ], LopArrayHandling(ValueError).to_col(
+            ((1, '', 2), ('', 3, None)), Ignore.IGNORE_BLANKS, True))
+        self.assertEqual([
+            [1], [''], [''], [3], [2]
+        ], LopArrayHandling(ValueError).to_col(
+            ((1, '', 2), ('', 3, None)), Ignore.IGNORE_ERRORS, True))
+
+    def test_to_row(self):
+        self.assertEqual([
+            [1, 3, 2]
+        ], LopArrayHandling(ValueError).to_row(
+            ((1, '', 2), ('', 3, None)), Ignore.IGNORE_BLANKS_AND_ERRORS, True))
 
 
 if __name__ == "__main__":
