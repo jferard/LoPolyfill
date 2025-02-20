@@ -203,6 +203,41 @@ module com { module github { module jferard { module lopolyfill {
             [in] any columns,
             [in] any padWith
         ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // HSTACK https://help.libreoffice.org/25.8/en-US/text/scalc/01/func_hstack.html
+        sequence< sequence< any > > lopHStack(
+            [in] sequence< sequence< any > > array,
+            [in] any array1,
+            [in] any array2,
+            [in] any array3,
+            [in] any array4,
+            [in] any array5,
+            [in] any array6,
+            [in] any array7,
+            [in] any array8,
+            [in] any array9,
+            [in] any array10,
+            [in] any array11,
+            [in] any array12,
+            [in] any array13,
+            [in] any array14,
+            [in] any array15,
+            [in] any array16,
+            [in] any array17,
+            [in] any array18,
+            [in] any array19,
+            [in] any array20,
+            [in] any array21,
+            [in] any array22,
+            [in] any array23,
+            [in] any array24,
+            [in] any array25,
+            [in] any array26,
+            [in] any array27,
+            [in] any array28,
+            [in] any array29,
+            [in] any array30
+        ) raises( com::sun::star::lang::IllegalArgumentException );
     };
 
 }; }; }; };

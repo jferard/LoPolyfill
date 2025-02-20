@@ -688,6 +688,29 @@ class LopArrayHandlingTestCase(unittest.TestCase):
             ('A15', 'B15', 'C15', None, None)
         ], LopArrayHandling(ValueError).vstack(DATA_1, DATA_2))
 
+    def test_htack_doc(self):
+        ARRAY = (
+            ("AAA", "BBB", "CCC", "DDD", "EEE"),
+            ("FFF", "", "", "III", "JJJ"),
+            ("KKK", "LLL", "MMM", "NNN", "    OOO"),
+        )
+        ARRAY1 = (
+            ("PPP", "QQQ"),
+            ("RRR", "SSS"),
+            ("TTT", "UUU"),
+            ("VVV", "WWW"),
+            ("XXX", "YYY"),
+        )
+
+        self.assertEqual([
+            ['AAA', 'BBB', 'CCC', 'DDD', 'EEE', 'PPP', 'QQQ'],
+            ['FFF', '', '', 'III', 'JJJ', 'RRR', 'SSS'],
+            ['KKK', 'LLL', 'MMM', 'NNN', '    OOO', 'TTT', 'UUU'],
+            [None, None, None, None, None, 'VVV', 'WWW'],
+            [None, None, None, None, None, 'XXX', 'YYY']
+        ],
+            LopArrayHandling(ValueError).hstack(ARRAY, ARRAY1))
+
     def test_hstack(self):
         self.assertEqual([
             ['A1', 'B1', 'C1', 'D1', 'E1', 'A11', 'B11', 'C11'],
@@ -712,13 +735,13 @@ class LopArrayHandlingTestCase(unittest.TestCase):
 
     def test_expand(self):
         self.assertEqual([
-            ['A11', 'B11', 'C11', None],
-            ['A12', 'B12', 'C12', None],
-            ['A13', 'B13', 'C13', None],
-            ['A14', 'B14', 'C14', None],
-            ['A15', 'B15', 'C15', None],
-            [None, None, None, None]
-        ], LopArrayHandling(ValueError).expand(DATA_2, 6, 4))
+            ('A11', 'B11', 'C11', None),
+            ('A12', 'B12', 'C12', None),
+            ('A13', 'B13', 'C13', None),
+            ('A14', 'B14', 'C14', None),
+            ('A15', 'B15', 'C15', None),
+            (None, None, None, None)
+        ], LopArrayHandling(ValueError).expand(DATA_2, 6, 4, None))
 
     def test_wrap_cols(self):
         self.assertEqual([

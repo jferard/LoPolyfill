@@ -32,7 +32,7 @@ def debug(func):
     logger = logging.getLogger(__name__)
 
     def aux(*args, **kwargs):
-        logger.debug("call(%s, %s)", args, kwargs)
+        logger.debug("%s(*%s, **%s)", func.__qualname__, args[1:], kwargs)
         try:
             return func(*args, **kwargs)
         except Exception as e:
@@ -744,9 +744,10 @@ class LopArrayHandling:
             for row in itertools.chain(*arrays)
         ]
 
-    @staticmethod
-    def hstack(*arrays: DataArray) -> List[List[Any]]:
-        assert arrays
+    @debug
+    def hstack(self, array: DataArray, *arrays: DataArray) -> List[List[Any]]:
+        arrays = [array] + [array for array in arrays if array is not None]
+        assert all(array and array[0] for array in arrays)
 
         h = max(len(rows) for rows in arrays)
         return [

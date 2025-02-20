@@ -1496,6 +1496,330 @@
                         </node>
                     </node>
                 </node>
+                <node oor:name="lopHStack" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOPFT.HSTACK</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Polyfill for HSTACK. Expand an array by adding rows or columns.</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">HSTACK</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                        <node oor:name="array" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The first array to be returned in a new array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array1" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_1</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 2nd array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array2" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_2</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 3rd array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array3" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_3</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 4th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array4" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_4</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 5th to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array5" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_5</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 6th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array6" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_6</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 7th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array7" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_7</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 8th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array8" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_8</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 9th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array9" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_9</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 10th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array10" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_10</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 11th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array11" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_11</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 12th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array12" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_12</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 13th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array13" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_13</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 14th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array14" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_14</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 15th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array15" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_15</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 16th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array16" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_16</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 17th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array17" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_17</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 18th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array18" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_18</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 19th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array19" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_19</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 20th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array20" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_20</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 21th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array21" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_21</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 22th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array22" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_22</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 23th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array23" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_23</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 24th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array24" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_24</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 25th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array25" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_25</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 26th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array26" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_26</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 27th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array27" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_27</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 28th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array28" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_28</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 29th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array29" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_29</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 30th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                    <node oor:name="Parameters">
+                        <node oor:name="array30" oor:op="replace">
+                            <prop oor:name="DisplayName">
+                                <value xml:lang="en">Array_30</value>
+                            </prop>
+                            <prop oor:name="Description">
+                                <value xml:lang="en">The 31th array to append sequentially after the previous array.</value>
+                            </prop>
+                        </node>
+                    </node>
+                </node>
             </node>
         </node>
     </node>
