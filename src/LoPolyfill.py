@@ -217,6 +217,53 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
             array29, array30,
         )
 
+    def lopVStack(
+            self, array: DataArray,
+            array1: Any, array2: Any, array3: Any, array4: Any,
+            array5: Any, array6: Any, array7: Any, array8: Any,
+            array9: Any, array10: Any, array11: Any, array12: Any,
+            array13: Any, array14: Any, array15: Any, array16: Any,
+            array17: Any, array18: Any, array19: Any, array20: Any,
+            array21: Any, array22: Any, array23: Any, array24: Any,
+            array25: Any, array26: Any, array27: Any, array28: Any,
+            array29: Any, array30: Any,
+    ) -> List[DataRow]:
+        return LopArrayHandling(IllegalArgumentException).vstack(
+            array, array1, array2, array3, array4, array5, array6, array7,
+            array8, array9, array10, array11, array12, array13, array14,
+            array15, array16, array17, array18, array19, array20, array21,
+            array22, array23, array24, array25, array26, array27, array28,
+            array29, array30,
+        )
+
+    def lopToCol(
+            self, array: DataArray, ignore: Any,
+            by_column: Any
+    ) -> List[DataRow]:
+        return LopArrayHandling(IllegalArgumentException).to_col(
+            array, ignore, by_column)
+
+    def lopToRow(
+            self, array: DataArray, ignore: Any,
+            by_column: Any
+    ) -> List[List[Any]]:
+        return LopArrayHandling(IllegalArgumentException).to_row(
+            array, ignore, by_column)
+
+    def lopWrapCols(
+            self, in_range: DataArray, wrap_count: int,
+            pad_with: Any
+    ) -> List[List[Any]]:
+        return LopArrayHandling(IllegalArgumentException).wraps_cols(
+            in_range, wrap_count, pad_with)
+
+    def lopWrapRows(
+            self, in_range: DataArray, wrap_count: int,
+            pad_with: Any
+    ) -> List[DataRow]:
+        return LopArrayHandling(IllegalArgumentException).wraps_rows(
+            in_range, wrap_count, pad_with)
+
     def _get_collator_from_doc(
             self, oDoc: XPropertySet, ignore_case: bool = True) -> XCollator:
         oServiceManager = self.ctxt.ServiceManager

@@ -734,31 +734,6 @@ class LopArrayHandling:
             rows[i] for i in rows_indices
         ]
 
-    @staticmethod
-    def vstack(*arrays: DataArray) -> List[DataRow]:
-        assert arrays
-
-        w = max(len(rows[0]) for rows in arrays)
-        return [
-            row + (None,) * (w - len(row))
-            for row in itertools.chain(*arrays)
-        ]
-
-    @debug
-    def hstack(self, array: DataArray, *arrays: DataArray) -> List[List[Any]]:
-        arrays = [array] + [array for array in arrays if array is not None]
-        assert all(array and array[0] for array in arrays)
-
-        h = max(len(rows) for rows in arrays)
-        return [
-            [
-                v
-                for rows in arrays
-                for v in (rows[i] if i < len(rows) else (None,) * len(rows[0]))
-            ]
-            for i in range(h)
-        ]
-
     @debug
     def drop(
             self, rows: DataArray, row_count: int, col_count: Any
@@ -844,6 +819,83 @@ class LopArrayHandling:
             for row in rows
         ] + padding_row * missing_row_count
 
+    @debug
+    def hstack(self, array: DataArray, *arrays: DataArray) -> List[List[Any]]:
+        arrays = [array] + [array for array in arrays if array is not None]
+        assert all(array and array[0] for array in arrays)
+
+        h = max(len(rows) for rows in arrays)
+        return [
+            [
+                v
+                for rows in arrays
+                for v in (rows[i] if i < len(rows) else (None,) * len(rows[0]))
+            ]
+            for i in range(h)
+        ]
+
+    @debug
+    def vstack(self, array: DataArray, *arrays: DataArray) -> List[DataRow]:
+        arrays = [array] + [array for array in arrays if array is not None]
+        assert all(array and array[0] for array in arrays)
+
+        w = max(len(rows[0]) for rows in arrays)
+        return [
+            row + (None,) * (w - len(row))
+            for row in itertools.chain(*arrays)
+        ]
+
+    @debug
+    def to_col(
+            self, rows: DataArray, ignore: Any, scan_by_col: Any
+    ) -> List[DataRow]:
+        if ignore is None:
+            ignore = Ignore.KEEP_ALL
+        else:
+            ignore = Ignore(int(ignore))
+        dont_ignore = self._get_dont_ignore_func(ignore)
+
+        if scan_by_col:
+            return [
+                (x,) for x in itertools.chain(*zip(*rows)) if dont_ignore(x)
+            ]
+        else:
+            return [(x,) for x in itertools.chain(*rows) if dont_ignore(x)]
+
+    @debug
+    def to_row(
+            self, rows: DataArray, ignore: Any, scan_by_col: Any
+    ) -> List[List[Any]]:
+        if ignore is None:
+            ignore = Ignore.KEEP_ALL
+        else:
+            ignore = Ignore(int(ignore))
+        dont_ignore = self._get_dont_ignore_func(ignore)
+
+        if scan_by_col:
+            return [
+                [x for x in itertools.chain(*zip(*rows)) if dont_ignore(x)]]
+        else:
+            return [[x for x in itertools.chain(*rows) if dont_ignore(x)]]
+
+    def _get_dont_ignore_func(self, ignore: Ignore) -> Callable[[Any], bool]:
+        if ignore == Ignore.IGNORE_BLANKS:
+            def dont_ignore(x):
+                return x != ''
+        elif ignore == Ignore.IGNORE_ERRORS:
+            def dont_ignore(x):
+                return x is not None
+        elif ignore == Ignore.IGNORE_BLANKS_AND_ERRORS:
+            def dont_ignore(x):
+                return x != '' and x is not None
+        elif ignore is None or ignore == Ignore.KEEP_ALL:
+            def dont_ignore(x):
+                return True
+        else:
+            raise self._illegal_argument_exception("Ignore")
+        return dont_ignore
+
+    @debug
     def wraps_cols(
             self, rows: DataArray, wrap_count: int, pad_with: Any
     ) -> List[List[Any]]:
@@ -860,15 +912,7 @@ class LopArrayHandling:
             for i in range(wrap_count)
         ]
 
-    def _extract_values(self, rows: DataArray) -> DataRow:
-        if len(rows[0]) == 1:
-            values = tuple([row[0] for row in rows])
-        elif len(rows) == 1:
-            values = rows[0]
-        else:
-            raise self._illegal_argument_exception("Expect a vector")
-        return values
-
+    @debug
     def wraps_rows(
             self, rows: DataArray, wrap_count: int, pad_with: Any
     ) -> List[DataRow]:
@@ -885,44 +929,14 @@ class LopArrayHandling:
             for i in range(0, len(values), wrap_count)
         ]
 
-    def to_col(
-            self, rows: DataArray, ignore: int, scan_by_col: bool
-    ) -> List[List[Any]]:
-        dont_ignore = self._get_dont_ignore_func(ignore)
-
-        if scan_by_col:
-            return [[x] for x in itertools.chain(*zip(*rows)) if
-                    dont_ignore(x)]
+    def _extract_values(self, rows: DataArray) -> DataRow:
+        if len(rows[0]) == 1:
+            values = tuple([row[0] for row in rows])
+        elif len(rows) == 1:
+            values = rows[0]
         else:
-            return [[x] for x in itertools.chain(*rows) if dont_ignore(x)]
-
-    def to_row(
-            self, rows: DataArray, ignore: int, scan_by_col: bool
-    ) -> List[List[Any]]:
-        dont_ignore = self._get_dont_ignore_func(ignore)
-
-        if scan_by_col:
-            return [
-                [x for x in itertools.chain(*zip(*rows)) if dont_ignore(x)]]
-        else:
-            return [[x for x in itertools.chain(*rows) if dont_ignore(x)]]
-
-    def _get_dont_ignore_func(self, ignore: int) -> Callable[[Any], bool]:
-        if ignore == Ignore.IGNORE_BLANKS:
-            def dont_ignore(x):
-                return x != ''
-        elif ignore == Ignore.IGNORE_ERRORS:
-            def dont_ignore(x):
-                return x is not None
-        elif ignore == Ignore.IGNORE_BLANKS_AND_ERRORS:
-            def dont_ignore(x):
-                return x != '' and x is not None
-        elif ignore is None or ignore == Ignore.KEEP_ALL:
-            def dont_ignore(x):
-                return True
-        else:
-            raise self._illegal_argument_exception("Ignore")
-        return dont_ignore
+            raise self._illegal_argument_exception("Expect a vector")
+        return values
 
 
 def create_cmp_values_with_collator(oCollator) -> Callable[[Any, Any], int]:
