@@ -21,7 +21,8 @@ import itertools
 import unittest
 
 from lopolyfill_funcs import XSearchMode, XMatchMode, IndexFinder, \
-    LopArrayHandling, Ignore
+    LopArrayHandling, Ignore, create_eq_criterion_with_regex, \
+    create_eq_criterion_with_wildcard
 from pythonpath.lopolyfill_funcs import (
     LopFilter, LopRandarray, LopSort, LopUnique, LopXMatch
 )
@@ -656,6 +657,46 @@ class IndexFinderTestCase(unittest.TestCase):
         self.assertEqual(2, finder.binary_find_index(2.5, values,
                                                      XMatchMode.LARGER,
                                                      reverse=True))
+
+    def test_eq_with_wildcard_question_mark(self):
+        criterion = "c?s"
+        eq = create_eq_criterion_with_wildcard(criterion)
+        self.assertTrue(eq('cas'))
+        self.assertTrue(eq('cis'))
+        self.assertFalse(eq('cars'))
+        self.assertFalse(eq('bas'))
+        self.assertFalse(eq('cs'))
+
+    def test_eq_with_wildcard_star(self):
+        criterion = "*cast"
+        eq = create_eq_criterion_with_wildcard(criterion)
+        self.assertTrue(eq("cast"))
+        self.assertTrue(eq("forecast"))
+        self.assertTrue(eq("outcast"))
+        # If the option Search criteria = and <> must apply to whole cells is
+        # disabled in Tools - Options - LibreOffice Calc - Calculate, then
+        # "forecaster" will be a match using the "*cast" search string.
+        self.assertFalse(eq('forecaster'))
+
+    def test_eq_with_wildcard_tilde(self):
+        criterion = "why~?"
+        eq = create_eq_criterion_with_wildcard(criterion)
+        self.assertTrue(eq("why?"))
+        self.assertFalse(eq("whys"))
+        self.assertFalse(eq("why~s"))
+
+    def test_eq_with_wildcard_regex(self):
+        criterion = "w.*y?"
+        eq = create_eq_criterion_with_wildcard(criterion)
+        self.assertTrue(eq("w.*y?"))
+        self.assertFalse(eq("why"))
+
+    def test_eq_with_regex(self):
+        criterion = "a.+b"
+        eq = create_eq_criterion_with_regex(criterion)
+        self.assertTrue(eq('a__b'))
+        self.assertTrue(eq('a b'))
+        self.assertFalse(eq('ab'))
 
 
 class LopArrayHandlingTestCase(unittest.TestCase):

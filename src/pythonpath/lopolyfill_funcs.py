@@ -22,6 +22,7 @@ import functools
 import itertools
 import logging
 import random
+import re
 from typing import Sequence, Any, Callable, List, Tuple, Optional, Iterable
 
 DataRow = Tuple[Any, ...]
@@ -471,11 +472,10 @@ class IndexFinder:
             reverse: bool
     ) -> Optional[int]:
         if match_mode == XMatchMode.EXACT:
-            eq_values = create_eq_values_with_collator(
-                self._oCollator)
-            ret = self._find_eq_value_index(
-                eq_values, criterion, values, reverse)
-            return ret
+            eq_criterion = create_eq_criterion_with_collator(
+                self._oCollator, criterion)
+            return self._find_eq_value_index(
+                eq_criterion, values, reverse)
         elif match_mode == XMatchMode.SMALLER:
             cmp_values = create_cmp_values_with_collator(self._oCollator)
             return self._find_smaller_value_index(
@@ -485,17 +485,27 @@ class IndexFinder:
             return self._find_larger_value_index(
                 cmp_values, criterion, values, reverse)
         elif match_mode == XMatchMode.WILDCARD:
-            raise NotImplementedError()
+            if isinstance(criterion, str):
+                eq_criterion = create_eq_criterion_with_wildcard(criterion)
+            else:
+                eq_criterion = lambda x: x == criterion
+            return self._find_eq_value_index(
+                eq_criterion, values, reverse)
         elif match_mode == XMatchMode.REGEX:
-            raise NotImplementedError()
+            if isinstance(criterion, str):
+                eq_criterion = create_eq_criterion_with_regex(criterion)
+            else:
+                eq_criterion = lambda x: x == criterion
+            return self._find_eq_value_index(
+                eq_criterion, values, reverse)
 
     def _find_eq_value_index(
-            self, eq_values: Callable[[Any, Any], bool], criterion: Any,
+            self, eq_criterion: Callable[[Any], bool],
             values: Sequence[Any], reverse: bool) -> Optional[int]:
-        """Lookup for the first value using an eq_values function"""
+        """Lookup for the first value using an eq_criterion function"""
         for i in self._get_indices(values, reverse):
             value = values[i]
-            if eq_values(value, criterion):
+            if eq_criterion(value):
                 return i
         return None
 
@@ -589,7 +599,7 @@ class IndexFinder:
     def _find_binary_first_eq_value_index(
             self, cmp_values: Callable[[Any, Any], int], criterion: Any,
             values: Sequence[Any]) -> Optional[int]:
-        """Lookup for the first value using an eq_values function"""
+        """Lookup for the first value using an eq_criterion function"""
         # values[idx - 1] < criterion <= values[idx]
         idx = bisect_left(values, criterion, cmp_values)
         if idx < len(values) and cmp_values(values[idx], criterion) == 0:
@@ -600,7 +610,7 @@ class IndexFinder:
     def _find_binary_last_eq_value_index(
             self, cmp_values: Callable[[Any, Any], int], criterion: Any,
             values: Sequence[Any]) -> Optional[int]:
-        """Lookup for the first value using an eq_values function"""
+        """Lookup for the first value using an eq_criterion function"""
         # values[idx - 1] <= criterion < values[idx]
         idx = bisect_right(values, criterion, cmp_values)
         if idx > 0:
@@ -747,7 +757,8 @@ class LopArrayHandling:
             elif row_count < 0:
                 selected_rows = rows[:row_count]
             else:
-                raise self._illegal_argument_exception("Wrong row_count parameter")
+                raise self._illegal_argument_exception(
+                    "Wrong row_count parameter")
 
         if col_count is None:
             return selected_rows
@@ -775,7 +786,8 @@ class LopArrayHandling:
             elif row_count < 0:
                 selected_rows = rows[row_count:]
             else:
-                raise self._illegal_argument_exception("Wrong row_count parameter")
+                raise self._illegal_argument_exception(
+                    "Wrong row_count parameter")
 
         if col_count is None:
             return selected_rows
@@ -978,16 +990,58 @@ def create_cmp_values_with_collator(oCollator) -> Callable[[Any, Any], int]:
     return cmp_values_with_collator
 
 
-def create_eq_values_with_collator(oCollator) -> Callable[[Any, Any], bool]:
-    def eq_values_with_collator(x: Any, y: Any) -> bool:
-        if x is None:
-            return False
-        elif isinstance(x, str) and isinstance(y, str):
-            return oCollator.compareString(x, y) == 0
-        else:
-            return x == y
+def create_eq_criterion_with_collator(oCollator, criterion: Any) -> Callable[
+    [Any], bool]:
+    if isinstance(criterion, str):
+        def eq_criterion_with_collator(x: Any) -> bool:
+            return isinstance(x, str) and oCollator.compareString(x,
+                                                                  criterion) == 0
+    else:
+        def eq_criterion_with_collator(x: Any) -> bool:
+            return x == criterion
 
-    return eq_values_with_collator
+    return eq_criterion_with_collator
+
+
+WILDCARD_REGEX = re.compile(r"(~?[?*])")
+
+
+def create_eq_criterion_with_wildcard(criterion: str) -> Callable[[Any], bool]:
+    parts = WILDCARD_REGEX.split(criterion)
+    for i in range(len(parts)):
+        if i % 2 == 0:  # non wildcard
+            parts[i] = re.escape(parts[i])
+        elif parts[i].startswith("~"):
+            parts[i] = "\\" + parts[i][1:]
+        elif parts[i] == "?":
+            parts[i] = "."
+        elif parts[i] == "*":
+            parts[i] = ".*"
+    criterion_pattern = "".join(parts)
+
+    if True:  # TODO: depend on LO option.
+        criterion_pattern = "^" + criterion_pattern + "$"
+
+    regex = re.compile(criterion_pattern, re.I)
+
+    def eq_criterion_with_wildcard(x: Any) -> bool:
+        return isinstance(x, str) and regex.match(x)
+
+    return eq_criterion_with_wildcard
+
+
+def create_eq_criterion_with_regex(criterion: str) -> Callable[[Any], bool]:
+    if True:  # TODO: depend on LO option.
+        criterion_pattern = "^" + criterion + "$"
+    else:
+        criterion_pattern = criterion
+
+    regex = re.compile(criterion_pattern, re.I)
+
+    def eq_criterion_with_regex(x: Any) -> bool:
+        return isinstance(x, str) and regex.match(x)
+
+    return eq_criterion_with_regex
 
 
 class Orientation(enum.Enum):
