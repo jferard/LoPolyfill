@@ -351,9 +351,11 @@ class XSearchMode(enum.IntEnum):
 
 
 class LopXMatch:
-    def __init__(self, oCollator, illegal_argument_exception: Any):
+    def __init__(
+            self, oCollator, illegal_argument_exception: Any, whole_cell: bool):
         self._oCollator = oCollator
         self._illegal_argument_exception = illegal_argument_exception
+        self._whole_cell = whole_cell
 
     @debug
     def lookup(
@@ -444,7 +446,9 @@ class LopXMatch:
             raise self._illegal_argument_exception(
                 "Incompatible MatchMode/SearchMode")
 
-        finder = IndexFinder(self._oCollator, self._illegal_argument_exception)
+        finder = IndexFinder(
+            self._oCollator, self._illegal_argument_exception, self._whole_cell
+        )
 
         if search_mode == XSearchMode.FIRST:
             return finder.find_index(
@@ -461,9 +465,11 @@ class LopXMatch:
 
 
 class IndexFinder:
-    def __init__(self, oCollator, illegal_argument_exception: Any):
+    def __init__(self, oCollator, illegal_argument_exception: Any,
+                 whole_cell: bool):
         self._oCollator = oCollator
         self._illegal_argument_exception = illegal_argument_exception
+        self._whole_cell = whole_cell
 
     def find_index(
             self, criterion: Any,
@@ -473,7 +479,7 @@ class IndexFinder:
     ) -> Optional[int]:
         if match_mode == XMatchMode.EXACT:
             eq_criterion = create_eq_criterion_with_collator(
-                self._oCollator, criterion)
+                self._oCollator, criterion, self._whole_cell)
             return self._find_eq_value_index(
                 eq_criterion, values, reverse)
         elif match_mode == XMatchMode.SMALLER:
@@ -486,14 +492,16 @@ class IndexFinder:
                 cmp_values, criterion, values, reverse)
         elif match_mode == XMatchMode.WILDCARD:
             if isinstance(criterion, str):
-                eq_criterion = create_eq_criterion_with_wildcard(criterion)
+                eq_criterion = create_eq_criterion_with_wildcard(
+                    criterion, self._whole_cell)
             else:
                 eq_criterion = lambda x: x == criterion
             return self._find_eq_value_index(
                 eq_criterion, values, reverse)
         elif match_mode == XMatchMode.REGEX:
             if isinstance(criterion, str):
-                eq_criterion = create_eq_criterion_with_regex(criterion)
+                eq_criterion = create_eq_criterion_with_regex(
+                    criterion, self._whole_cell)
             else:
                 eq_criterion = lambda x: x == criterion
             return self._find_eq_value_index(
@@ -990,8 +998,10 @@ def create_cmp_values_with_collator(oCollator) -> Callable[[Any, Any], int]:
     return cmp_values_with_collator
 
 
-def create_eq_criterion_with_collator(oCollator, criterion: Any) -> Callable[
-    [Any], bool]:
+def create_eq_criterion_with_collator(
+        oCollator, criterion: Any, whole_cell: bool
+) -> Callable[[Any], bool]:
+    # todo: use whole_cell
     if isinstance(criterion, str):
         def eq_criterion_with_collator(x: Any) -> bool:
             return isinstance(x, str) and oCollator.compareString(x,
@@ -1006,7 +1016,8 @@ def create_eq_criterion_with_collator(oCollator, criterion: Any) -> Callable[
 WILDCARD_REGEX = re.compile(r"(~?[?*])")
 
 
-def create_eq_criterion_with_wildcard(criterion: str) -> Callable[[Any], bool]:
+def create_eq_criterion_with_wildcard(
+        criterion: str, whole_cell: bool) -> Callable[[Any], bool]:
     parts = WILDCARD_REGEX.split(criterion)
     for i in range(len(parts)):
         if i % 2 == 0:  # non wildcard
@@ -1019,7 +1030,7 @@ def create_eq_criterion_with_wildcard(criterion: str) -> Callable[[Any], bool]:
             parts[i] = ".*"
     criterion_pattern = "".join(parts)
 
-    if True:  # TODO: depend on LO option.
+    if whole_cell:
         criterion_pattern = "^" + criterion_pattern + "$"
 
     regex = re.compile(criterion_pattern, re.I)
@@ -1030,8 +1041,9 @@ def create_eq_criterion_with_wildcard(criterion: str) -> Callable[[Any], bool]:
     return eq_criterion_with_wildcard
 
 
-def create_eq_criterion_with_regex(criterion: str) -> Callable[[Any], bool]:
-    if True:  # TODO: depend on LO option.
+def create_eq_criterion_with_regex(
+        criterion: str, whole_cell: bool) -> Callable[[Any], bool]:
+    if whole_cell:
         criterion_pattern = "^" + criterion + "$"
     else:
         criterion_pattern = criterion

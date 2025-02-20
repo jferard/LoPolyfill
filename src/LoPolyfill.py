@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any, Sequence, Tuple, List
 
 import unohelper
+import uno
 from com.github.jferard.lopolyfill import XLoPolyfill
 from com.sun.star.beans import XPropertySet
 from com.sun.star.lang import IllegalArgumentException
@@ -117,9 +118,13 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
             searchMode: Any
     ) -> DataArray:
         oCollator = self._get_collator_from_doc(oDoc)
-        return LopXMatch(oCollator, IllegalArgumentException).lookup(
+        whole_cell = self._get_whole_cell()
+        return LopXMatch(
+            oCollator, IllegalArgumentException, whole_cell
+        ).lookup(
             criterion, searchRange, resultRange, defaultValue, matchMode,
-            searchMode)
+            searchMode
+        )
 
     def lopXMatch(
             self,
@@ -130,8 +135,12 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
             searchMode: Any
     ):
         oCollator = self._get_collator_from_doc(oDoc)
-        return LopXMatch(oCollator, IllegalArgumentException).match(
-            criterion, searchRange, matchMode, searchMode)
+        whole_cell = self._get_whole_cell()
+        return LopXMatch(
+            oCollator, IllegalArgumentException, whole_cell
+        ).match(
+            criterion, searchRange, matchMode, searchMode
+        )
 
     def lopChooseCols(
             self, array: DataArray, column1: int,
@@ -274,6 +283,17 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
         oCollator.loadDefaultCollator(oLocale, 1 if ignore_case else 0)
 
         return oCollator
+
+    def _get_whole_cell(self) -> bool:
+        pv = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
+        pv.Name = "nodepath"
+        pv.Value = "org.openoffice.Office.Calc/Calculate/Other"
+        oConfigProvider = self.ctxt.getValueByName(
+            "/singletons/com.sun.star.configuration.theDefaultProvider")
+
+        oAccess = oConfigProvider.createInstanceWithArguments(
+            "com.sun.star.configuration.ConfigurationAccess", (pv,))
+        return oAccess.SearchCriteria
 
 
 def create_instance(ctxt):

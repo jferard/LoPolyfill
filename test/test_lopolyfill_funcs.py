@@ -20,9 +20,9 @@
 import itertools
 import unittest
 
-from lopolyfill_funcs import XSearchMode, XMatchMode, IndexFinder, \
-    LopArrayHandling, Ignore, create_eq_criterion_with_regex, \
-    create_eq_criterion_with_wildcard
+from lopolyfill_funcs import (
+    XSearchMode, XMatchMode, IndexFinder, LopArrayHandling, Ignore,
+    create_eq_criterion_with_regex, create_eq_criterion_with_wildcard)
 from pythonpath.lopolyfill_funcs import (
     LopFilter, LopRandarray, LopSort, LopUnique, LopXMatch
 )
@@ -660,7 +660,7 @@ class IndexFinderTestCase(unittest.TestCase):
 
     def test_eq_with_wildcard_question_mark(self):
         criterion = "c?s"
-        eq = create_eq_criterion_with_wildcard(criterion)
+        eq = create_eq_criterion_with_wildcard(criterion, True)
         self.assertTrue(eq('cas'))
         self.assertTrue(eq('cis'))
         self.assertFalse(eq('cars'))
@@ -669,7 +669,7 @@ class IndexFinderTestCase(unittest.TestCase):
 
     def test_eq_with_wildcard_star(self):
         criterion = "*cast"
-        eq = create_eq_criterion_with_wildcard(criterion)
+        eq = create_eq_criterion_with_wildcard(criterion, True)
         self.assertTrue(eq("cast"))
         self.assertTrue(eq("forecast"))
         self.assertTrue(eq("outcast"))
@@ -680,24 +680,32 @@ class IndexFinderTestCase(unittest.TestCase):
 
     def test_eq_with_wildcard_tilde(self):
         criterion = "why~?"
-        eq = create_eq_criterion_with_wildcard(criterion)
+        eq = create_eq_criterion_with_wildcard(criterion, True)
         self.assertTrue(eq("why?"))
         self.assertFalse(eq("whys"))
         self.assertFalse(eq("why~s"))
 
     def test_eq_with_wildcard_regex(self):
         criterion = "w.*y?"
-        eq = create_eq_criterion_with_wildcard(criterion)
+        eq = create_eq_criterion_with_wildcard(criterion, True)
         self.assertTrue(eq("w.*y?"))
         self.assertFalse(eq("why"))
 
     def test_eq_with_regex(self):
         criterion = "a.+b"
-        eq = create_eq_criterion_with_regex(criterion)
+        eq = create_eq_criterion_with_regex(criterion, True)
         self.assertTrue(eq('a__b'))
         self.assertTrue(eq('a b'))
+        self.assertFalse(eq('a__bc'))
         self.assertFalse(eq('ab'))
 
+    def test_eq_with_regex_part(self):
+        criterion = "a.+b"
+        eq = create_eq_criterion_with_regex(criterion, False)
+        self.assertTrue(eq('a__b'))
+        self.assertTrue(eq('a__bc'))
+        self.assertTrue(eq('a b'))
+        self.assertFalse(eq('ab'))
 
 class LopArrayHandlingTestCase(unittest.TestCase):
     def test_choose_cols(self):
