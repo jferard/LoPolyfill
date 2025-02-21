@@ -18,7 +18,7 @@
 # taken from the LibreOffice help pages ( Mozilla Public License v2.0).
 import logging
 from pathlib import Path
-from typing import Any, Sequence, Tuple, List
+from typing import Any, Sequence, Tuple, List, cast, Dict
 
 import unohelper
 import uno
@@ -35,6 +35,8 @@ from lopolyfill_funcs import (
 class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
     def __init__(self, ctx):
         self.ctxt = ctx
+        self._collator_by_doc_uid = cast(Dict[str, XCollator], {})
+        self._whole_cell = cast(bool, None)
 
     # FILTER https://help.libreoffice.org/master/en-US/text/scalc/01/func_filter.html
     def lopFilter(
@@ -275,25 +277,32 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
 
     def _get_collator_from_doc(
             self, oDoc: XPropertySet, ignore_case: bool = True) -> XCollator:
-        oServiceManager = self.ctxt.ServiceManager
-        oCollator = oServiceManager.createInstance(
-            "com.sun.star.i18n.Collator")
+        try:
+            return self._collator_by_doc_uid[oDoc.RuntimeUID]
+        except KeyError:
+            oServiceManager = self.ctxt.ServiceManager
+            oCollator = oServiceManager.createInstance(
+                "com.sun.star.i18n.Collator")
 
-        oLocale = oDoc.CharLocale
-        oCollator.loadDefaultCollator(oLocale, 1 if ignore_case else 0)
+            oLocale = oDoc.CharLocale
+            oCollator.loadDefaultCollator(oLocale, 1 if ignore_case else 0)
+            self._collator_by_doc_uid[oDoc.RuntimeUID] = oCollator
 
         return oCollator
 
     def _get_whole_cell(self) -> bool:
-        pv = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
-        pv.Name = "nodepath"
-        pv.Value = "org.openoffice.Office.Calc/Calculate/Other"
-        oConfigProvider = self.ctxt.getValueByName(
-            "/singletons/com.sun.star.configuration.theDefaultProvider")
+        if self._whole_cell is None:
+            pv = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
+            pv.Name = "nodepath"
+            pv.Value = "org.openoffice.Office.Calc/Calculate/Other"
+            oConfigProvider = self.ctxt.getValueByName(
+                "/singletons/com.sun.star.configuration.theDefaultProvider")
 
-        oAccess = oConfigProvider.createInstanceWithArguments(
-            "com.sun.star.configuration.ConfigurationAccess", (pv,))
-        return oAccess.SearchCriteria
+            oAccess = oConfigProvider.createInstanceWithArguments(
+                "com.sun.star.configuration.ConfigurationAccess", (pv,))
+            self._whole_cell = oAccess.SearchCriteria
+
+        return self._whole_cell
 
 
 def create_instance(ctxt):

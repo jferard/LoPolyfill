@@ -707,6 +707,7 @@ class IndexFinderTestCase(unittest.TestCase):
         self.assertTrue(eq('a b'))
         self.assertFalse(eq('ab'))
 
+
 class LopArrayHandlingTestCase(unittest.TestCase):
     def test_choose_cols(self):
         self.assertEqual([
