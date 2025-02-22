@@ -23,4 +23,9 @@
             <license-text xlink:href="LICENSE" lang="en"/>
         </simple-license>
     </registration>
+
+    <extension-description>
+        <src lang="en" xlink:href="package-description.txt"/>
+        <src lang="fr" xlink:href="package-description-fr.txt"/>
+    </extension-description>
 </description>

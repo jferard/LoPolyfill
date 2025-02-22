@@ -29,6 +29,11 @@ class LoPolyfillbuilder:
         process = self._run_command(command)
 
     def copy(self):
+        for path in SRC_DIR.glob("*"):
+            if path.name in ("lopolyfill.xcu", "description.xml", "LoPolyfill.py", "LICENSE"):
+                shutil.copy2(path, DEST_DIR / path.name)
+            elif path.name.startswith("package-description"):
+                shutil.copy2(path, DEST_DIR / path.name)
         for name in ("lopolyfill.xcu", "description.xml", "LoPolyfill.py", "LICENSE"):
             shutil.copy2(SRC_DIR / name, DEST_DIR / name)
         shutil.copytree(SRC_DIR / "META-INF", DEST_DIR / "META-INF")

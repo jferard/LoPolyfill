@@ -1,0 +1,4 @@
+LoPolyfill is an extension that aims provide recent Calc functions for
+LibreOffice 7.2 (Python 3.8) and following. It is intended for
+organisations that have a large computer fleet and don't want to update
+LibreOffice for various reasons.
