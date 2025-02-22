@@ -16,16 +16,15 @@
 #
 # IMPORTANT: The documentation of the provided functions and their parameters is
 # taken from the LibreOffice help pages ( Mozilla Public License v2.0).
-import logging
 from pathlib import Path
-from typing import Any, Sequence, Tuple, List, cast, Dict
+from typing import Any, List, cast, Dict
 
-import unohelper
 import uno
+import unohelper
 from com.github.jferard.lopolyfill import XLoPolyfill
 from com.sun.star.beans import XPropertySet
-from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.i18n import XCollator
+from com.sun.star.lang import IllegalArgumentException
 
 from lopolyfill_funcs import (
     LopFilter, LopRandarray, LopSequence, LopSort, LopUnique, LopXMatch,
@@ -265,14 +264,14 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
             self, in_range: DataArray, wrap_count: int,
             pad_with: Any
     ) -> List[List[Any]]:
-        return LopArrayHandling(IllegalArgumentException).wraps_cols(
+        return LopArrayHandling(IllegalArgumentException).wrap_cols(
             in_range, wrap_count, pad_with)
 
     def lopWrapRows(
             self, in_range: DataArray, wrap_count: int,
             pad_with: Any
     ) -> List[DataRow]:
-        return LopArrayHandling(IllegalArgumentException).wraps_rows(
+        return LopArrayHandling(IllegalArgumentException).wrap_rows(
             in_range, wrap_count, pad_with)
 
     def _get_collator_from_doc(
@@ -306,10 +305,13 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
 
 
 def create_instance(ctxt):
+    # IF_DEBUG
+    import logging
     logging.basicConfig(filename=str(Path.home() / "lopolyfill.log"),
                         encoding='utf-8',
                         level=logging.DEBUG, filemode="w")
     logging.getLogger(__name__).debug("Instance creation")
+    # ENDIF_DEBUG
     ret = LoPolyfillImpl(ctxt)
     return ret
 

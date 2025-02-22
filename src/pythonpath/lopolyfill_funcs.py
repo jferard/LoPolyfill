@@ -20,7 +20,6 @@ import collections
 import enum
 import functools
 import itertools
-import logging
 import random
 import re
 from typing import Sequence, Any, Callable, List, Tuple, Optional, Iterable
@@ -29,27 +28,10 @@ DataRow = Tuple[Any, ...]
 DataArray = Tuple[DataRow, ...]
 
 
-def debug(func):
-    logger = logging.getLogger(__name__)
-
-    def aux(*args, **kwargs):
-        logger.debug("%s(*%s, **%s)", func.__qualname__, args[1:], kwargs)
-        try:
-            return func(*args, **kwargs)
-        except Exception as e:
-            logger.exception("LoPolyfill")
-            raise
-        finally:
-            logger.debug("ok")
-
-    return aux
-
-
 class LopFilter:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
-    @debug
     def execute(self, rows: DataArray,
                 criteria: DataArray, default_value: Any):
         assert rows and rows[0]
@@ -83,7 +65,6 @@ class LopRandarray:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
-    @debug
     def execute(
             self, row_count: Any, column_count: Any, min_value: Any,
             max_value: Any, integers: Any):
@@ -125,7 +106,6 @@ class LopSequence:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
-    @debug
     def execute(
             self, rows: int, columns: int, start: Any, step: Any):
         if rows < 1:
@@ -158,7 +138,6 @@ class LopSort:
         self._oCollator = oCollator
         self._illegal_argument_exception = illegal_argument_exception
 
-    @debug
     def sort(
             self, in_range: DataArray, sort_index: Any,
             sort_order: Any, by_col: Any):
@@ -213,7 +192,6 @@ class LopSort:
         return sorted(rows, key=functools.cmp_to_key(cmp_rows),
                       reverse=ascending is False)
 
-    @debug
     def sort_by(
             self, inRange: DataArray,
             sortByRange1: DataArray, sortOrder1: int,
@@ -296,7 +274,6 @@ class LopUnique:
     def __init__(self, illegal_argument_exception: Any):
         self._illegal_argument_exception = illegal_argument_exception
 
-    @debug
     def execute(
             self, in_range: DataArray, by_col: Any,
             uniqueness: Any
@@ -357,7 +334,6 @@ class LopXMatch:
         self._illegal_argument_exception = illegal_argument_exception
         self._whole_cell = whole_cell
 
-    @debug
     def lookup(
             self, criterion: Any,
             search_range: DataArray,
@@ -404,7 +380,6 @@ class LopXMatch:
                 raise self._illegal_argument_exception("SearchModeMode")
         return search_mode
 
-    @debug
     def match(
             self, criterion: Any,
             search_range: DataArray,
@@ -732,7 +707,6 @@ class LopArrayHandling:
             for row in rows
         ]
 
-    @debug
     def choose_rows(
             self, rows: DataArray, row_index1: int, *rows_indices: Any
     ) -> List[List[Any]]:
@@ -752,7 +726,6 @@ class LopArrayHandling:
             rows[i] for i in rows_indices
         ]
 
-    @debug
     def drop(
             self, rows: DataArray, row_count: int, col_count: Any
     ) -> List[DataRow]:
@@ -779,7 +752,6 @@ class LopArrayHandling:
         else:
             raise self._illegal_argument_exception("Wrong col_count parameter")
 
-    @debug
     def take(
             self, rows: DataArray, row_count: int, col_count: int
     ) -> List[DataRow]:
@@ -808,7 +780,6 @@ class LopArrayHandling:
         else:
             raise self._illegal_argument_exception("Wrong col_count parameter")
 
-    @debug
     def expand(
             self, rows: DataArray, row_count: Any, col_count: Any, pad_with: Any
     ) -> List[DataRow]:
@@ -839,7 +810,6 @@ class LopArrayHandling:
             for row in rows
         ] + padding_row * missing_row_count
 
-    @debug
     def hstack(self, array: DataArray, *arrays: DataArray) -> List[List[Any]]:
         arrays = [array] + [array for array in arrays if array is not None]
         assert all(array and array[0] for array in arrays)
@@ -854,7 +824,6 @@ class LopArrayHandling:
             for i in range(h)
         ]
 
-    @debug
     def vstack(self, array: DataArray, *arrays: DataArray) -> List[DataRow]:
         arrays = [array] + [array for array in arrays if array is not None]
         assert all(array and array[0] for array in arrays)
@@ -865,7 +834,6 @@ class LopArrayHandling:
             for row in itertools.chain(*arrays)
         ]
 
-    @debug
     def to_col(
             self, rows: DataArray, ignore: Any, scan_by_col: Any
     ) -> List[DataRow]:
@@ -882,7 +850,6 @@ class LopArrayHandling:
         else:
             return [(x,) for x in itertools.chain(*rows) if dont_ignore(x)]
 
-    @debug
     def to_row(
             self, rows: DataArray, ignore: Any, scan_by_col: Any
     ) -> List[List[Any]]:
@@ -915,8 +882,7 @@ class LopArrayHandling:
             raise self._illegal_argument_exception("Ignore")
         return dont_ignore
 
-    @debug
-    def wraps_cols(
+    def wrap_cols(
             self, rows: DataArray, wrap_count: int, pad_with: Any
     ) -> List[List[Any]]:
         assert rows and rows[0]
@@ -932,8 +898,7 @@ class LopArrayHandling:
             for i in range(wrap_count)
         ]
 
-    @debug
-    def wraps_rows(
+    def wrap_rows(
             self, rows: DataArray, wrap_count: int, pad_with: Any
     ) -> List[DataRow]:
         assert rows and rows[0]
@@ -1099,3 +1064,44 @@ def bisect_left(a, x, cmp):
         else:
             hi = mid
     return lo
+
+
+# IF_DEBUG
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def debug(func):
+    def aux(*args, **kwargs):
+        logger.debug("%s(*%s, **%s)", func.__qualname__, args[1:], kwargs)
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            logger.exception("LoPolyfill")
+            raise
+        finally:
+            logger.debug("%s ok", func.__qualname__)
+
+    return aux
+
+
+LopFilter.execute = debug(LopFilter.execute)
+LopRandarray.execute = debug(LopRandarray.execute)
+LopSequence.execute = debug(LopSequence.execute)
+LopSort.sort_by = debug(LopSort.sort_by)
+LopUnique.execute = debug(LopUnique.execute)
+LopXMatch.lookup = debug(LopXMatch.lookup)
+LopXMatch.match = debug(LopXMatch.match)
+LopArrayHandling.choose_cols = debug(LopArrayHandling.choose_cols)
+LopArrayHandling.choose_rows = debug(LopArrayHandling.choose_rows)
+LopArrayHandling.drop = debug(LopArrayHandling.drop)
+LopArrayHandling.take = debug(LopArrayHandling.take)
+LopArrayHandling.expand = debug(LopArrayHandling.expand)
+LopArrayHandling.hstack = debug(LopArrayHandling.hstack)
+LopArrayHandling.vstack = debug(LopArrayHandling.vstack)
+LopArrayHandling.to_col = debug(LopArrayHandling.to_col)
+LopArrayHandling.to_row = debug(LopArrayHandling.to_row)
+LopArrayHandling.wrap_cols = debug(LopArrayHandling.wrap_cols)
+LopArrayHandling.wrap_rows = debug(LopArrayHandling.wrap_rows)
+# ENDIF_DEBUG

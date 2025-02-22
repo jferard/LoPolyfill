@@ -802,14 +802,14 @@ class LopArrayHandlingTestCase(unittest.TestCase):
             ['A25', 'A32', 'A39'],
             ['A26', 'A33', 'A40'],
             ['A27', 'A34', 'foo']
-        ], LopArrayHandling(ValueError).wraps_cols(
+        ], LopArrayHandling(ValueError).wrap_cols(
             COLUMN_1, 7, "foo"))
         self.assertEqual([
             ['A21', 'A25', 'A29', 'A33', 'A37'],
             ['A22', 'A26', 'A30', 'A34', 'A38'],
             ['A23', 'A27', 'A31', 'A35', 'A39'],
             ['A24', 'A28', 'A32', 'A36', 'A40']
-        ], LopArrayHandling(ValueError).wraps_cols(
+        ], LopArrayHandling(ValueError).wrap_cols(
             COLUMN_1, 4, "foo"))
 
     def test_wrap_rows(self):
