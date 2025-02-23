@@ -687,19 +687,17 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">Specifies the match type. Values can be:
-                                    * 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
-                                    * -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
-                                    * 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
-                                    * 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
-                                    * 3: a regular expression match.
-                                </value>
+* 0: exact match (default). If Search criterion value is not found and Result if not found text is omitted, then return the #N/A error.
+* -1: attempt exact match. If Search criterion value is not found, then return the next smaller item.
+* 1: attempt exact match. If Search criterion value is not found, then return the next larger item.
+* 2: a wildcard match where characters * (multiple characters), ? (single character), and ~ have special meanings.
+* 3: a regular expression match.</value>
                                 <value xml:lang="fr">Spécifie le type de correspondance. Les valeurs peuvent être :
-                                    * 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
-                                    * -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
-                                    * 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
-                                    * 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
-                                    * 3 : une correspondance d'expression régulière.
-                                </value>
+* 0 : correspondance exacte (par défaut). Si la valeur du critère de recherche n'est pas trouvée et que le texte du résultat si non trouvé est omis, renvoie l'erreur #N/D.
+* -1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément le plus petit suivant.
+* 1 : tentative de correspondance exacte. Si la valeur du critère de recherche n'est pas trouvée, renvoie l'élément suivant plus grand.
+* 2 : une correspondance générique où les caractères * (plusieurs caractères), ? (un seul caractère) et ~ ont des significations spéciales.
+* 3 : une correspondance d'expression régulière.</value>
                             </prop>
                         </node>
                         <node oor:name="searchMode" oor:op="replace">
@@ -2184,15 +2182,17 @@
                             </prop>
                             <prop oor:name="Description">
                                 <value xml:lang="en">Whether to ignore certain types of values. By default, no values are ignored. Specify one of the following:
-0: Keep all values (default)
-1: Ignore blank cells
-2: Ignore cells with errors
-3: Ignore both blank cells and error cells</value>
+                                    0: Keep all values (default)
+                                    1: Ignore blank cells
+                                    2: Ignore cells with errors
+                                    3: Ignore both blank cells and error cells
+                                </value>
                                 <value xml:lang="fr">Indique s'il faut ignorer certains types de valeurs. Par défaut, aucune valeur n'est ignorée. Spécifiez l'une des options suivantes :
-0 : conserver toutes les valeurs (par défaut)
-1 : ignorer les cellules vides
-2 : ignorer les cellules contenant des erreurs
-3 : ignorer les cellules vides et les cellules d'erreur</value>
+                                    0 : conserver toutes les valeurs (par défaut)
+                                    1 : ignorer les cellules vides
+                                    2 : ignorer les cellules contenant des erreurs
+                                    3 : ignorer les cellules vides et les cellules d'erreur
+                                </value>
                             </prop>
                         </node>
                         <node oor:name="byColumn" oor:op="replace">

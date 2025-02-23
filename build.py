@@ -40,10 +40,6 @@ class LoPolyfillbuilder:
                 self._copy_file(path, DEST_DIR / path.name)
             elif path.name.startswith("package-description"):
                 self._copy_file(path, DEST_DIR / path.name)
-        for name in (
-                "lopolyfill.xcu", "description.xml", "LoPolyfill.py",
-                "LICENSE"):
-            self._copy_file(SRC_DIR / name, DEST_DIR / name)
         self._copy_tree(SRC_DIR / "META-INF", DEST_DIR / "META-INF")
         self._copy_tree(SRC_DIR / "pythonpath", DEST_DIR / "pythonpath")
 
