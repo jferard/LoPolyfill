@@ -135,7 +135,7 @@ def upgrade(ctxt: XComponentContext, oDoc) -> Any:
                     clean_formula = oCell.Formula[2:-1]
                     new_clean_formula = regex.sub(func, clean_formula)
                     if new_clean_formula != clean_formula:
-                        oCellRange.ArrayFormula = clean_formula
+                        oCellRange.ArrayFormula = new_clean_formula
                         count += 1
                 else:
                     formula = oCell.Formula
