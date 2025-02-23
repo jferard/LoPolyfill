@@ -19,21 +19,28 @@
 from pathlib import Path
 from typing import Any, List, cast, Dict
 
-import uno
+# noinspection PyUnresolvedReferences
 import unohelper
+# noinspection PyUnresolvedReferences
 from com.github.jferard.lopolyfill import XLoPolyfill
+# noinspection PyUnresolvedReferences
 from com.sun.star.beans import XPropertySet
+# noinspection PyUnresolvedReferences
 from com.sun.star.i18n import XCollator
+# noinspection PyUnresolvedReferences
 from com.sun.star.lang import IllegalArgumentException
+# noinspection PyUnresolvedReferences
+from com.sun.star.uno import XComponentContext
 
+import lo_helper
 from lopolyfill_funcs import (
     LopFilter, LopRandarray, LopSequence, LopSort, LopUnique, LopXMatch,
     LopArrayHandling, DataArray, DataRow)
 
 
 class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
-    def __init__(self, ctx):
-        self.ctxt = ctx
+    def __init__(self, ctxt: XComponentContext):
+        self.ctxt = ctxt
         self._collator_by_doc_uid = cast(Dict[str, XCollator], {})
         self._whole_cell = cast(bool, None)
 
@@ -274,32 +281,26 @@ class LoPolyfillImpl(unohelper.Base, XLoPolyfill):
         return LopArrayHandling(IllegalArgumentException).wrap_rows(
             in_range, wrap_count, pad_with)
 
+    def lopUpgrade(
+            self,
+            oDoc: XPropertySet
+    ) -> Any:
+        return lo_helper.upgrade(self.ctxt, oDoc)
+
     def _get_collator_from_doc(
             self, oDoc: XPropertySet, ignore_case: bool = True) -> XCollator:
         try:
             return self._collator_by_doc_uid[oDoc.RuntimeUID]
         except KeyError:
-            oServiceManager = self.ctxt.ServiceManager
-            oCollator = oServiceManager.createInstance(
-                "com.sun.star.i18n.Collator")
-
-            oLocale = oDoc.CharLocale
-            oCollator.loadDefaultCollator(oLocale, 1 if ignore_case else 0)
+            oCollator = lo_helper.get_collator_from_doc(
+                self.ctxt, oDoc, ignore_case)
             self._collator_by_doc_uid[oDoc.RuntimeUID] = oCollator
 
         return oCollator
 
     def _get_whole_cell(self) -> bool:
         if self._whole_cell is None:
-            pv = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
-            pv.Name = "nodepath"
-            pv.Value = "org.openoffice.Office.Calc/Calculate/Other"
-            oConfigProvider = self.ctxt.getValueByName(
-                "/singletons/com.sun.star.configuration.theDefaultProvider")
-
-            oAccess = oConfigProvider.createInstanceWithArguments(
-                "com.sun.star.configuration.ConfigurationAccess", (pv,))
-            self._whole_cell = oAccess.SearchCriteria
+            self._whole_cell = lo_helper.get_whole_cell(self.ctxt)
 
         return self._whole_cell
 

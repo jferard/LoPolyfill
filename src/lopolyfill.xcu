@@ -2362,6 +2362,25 @@
                         </node>
                     </node>
                 </node>
+                <node oor:name="lopUpgrade" oor:op="replace">
+                    <prop oor:name="DisplayName">
+                        <value xml:lang="en">LOP.UPGRADE</value>
+                        <value xml:lang="fr">LOP.MISEAJOUR</value>
+                    </prop>
+                    <prop oor:name="Description">
+                        <value xml:lang="en">Special LOP function. Use it to upgrade formulas (remove the LOP prefix).</value>
+                        <value xml:lang="fr">Fonction spéciale LOP. Utilisez-la pour mettre à jour les formules (enlever le préfixe LOP).</value>
+                    </prop>
+                    <prop oor:name="Category">
+                        <value>Add-In</value>
+                    </prop>
+                    <prop oor:name="CompatibilityName">
+                        <value xml:lang="en">LOPUPGRADE</value>
+                        <value xml:lang="fr">LOPMISEAJOUR</value>
+                    </prop>
+                    <node oor:name="Parameters">
+                    </node>
+                </node>
             </node>
         </node>
     </node>

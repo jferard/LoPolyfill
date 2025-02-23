@@ -301,6 +301,11 @@ module com { module github { module jferard { module lopolyfill {
             [in] long wrapCount,
             [in] any padWith
         ) raises( com::sun::star::lang::IllegalArgumentException );
+
+        // Special function
+        any lopUpgrade(
+            [in] com::sun::star::beans::XPropertySet oDoc
+        );
     };
 
 }; }; }; };
